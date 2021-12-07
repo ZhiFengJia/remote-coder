@@ -7,27 +7,58 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap 的 CSS 文件 -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <!--使用Code Mirror必须引入的-->
     <link rel="stylesheet" href="/css/codemirror.css">
+    <link rel="stylesheet" href="/jstree3.3.12/themes/default/style.min.css" />
 
     <script src="/js/jquery.min.js"></script>
     <script src="/js/popper.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
-    <!--使用Code Mirror必须引入的-->
     <script src="/js/codemirror.js"></script>
-    <!--Java代码高亮引入-->
+    <!--Java代码高亮-->
     <script src="/js/clike.js"></script>
+    <script src="/jstree3.3.12/jstree.min.js"></script>
 
-    <title>远端调试</title>
+    <title>Web IDE</title>
 </head>
 
-<body>
-    <div id="SourceCodeFileName" hidden>HelloWorld</div>
-    <div id="sourceCodeList">模板: </div>
-    <div class="editor_control">
-        <textarea class="form-control" id="code" name="code" style="display: none;" rows="30">
+<body class="container-fluid">
+        <div class="row border border-dark">
+            <div class="col">
+                <div class="btn-group">
+                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                        File
+                    </button>
+                    <div class="dropdown-menu">
+                        <button class="dropdown-item" type="button">Create File</button>
+                        <button class="dropdown-item" type="button">Delete File</button>
+                        <button class="dropdown-item" type="button">Rename File</button>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                        Git
+                    </button>
+                    <div class="dropdown-menu">
+                        <button class="dropdown-item" type="button">Commit</button>
+                        <button class="dropdown-item" type="button">Pull</button>
+                        <button class="dropdown-item" type="button">Push</button>
+                    </div>
+                </div>
+                <button id="execute" class="btn btn-sm btn-primary" type="button">
+                    Run
+                    <span id="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
+                          style="display: none"></span>
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2 border border-dark">
+                <div id="jstree"></div>
+            </div>
+            <div class="col-10 border border-dark">
+                <div class="editor_control">
+                    <textarea class="form-control" id="code" name="code" style="display: none;" rows="30">
 /**
  * 简单示例
  *
@@ -39,19 +70,40 @@ public class HelloWorld {
         System.out.println("HelloWorld");
     }
 }
-        </textarea>
-    </div>
-    <button id="execute" class="btn btn-primary" type="button">
-        执行
-        <span id="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
-            style="display: none"></span>
-    </button>
-    <div class="form-group">
-        <textarea name="executeResult" class="form-control" id="exampleFormControlTextarea1" rows="10"
-            placeholder="执行结果" readonly></textarea>
-    </div>
+                    </textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row border border-dark">
+            <div class="col">
+                <div class="form-group">
+                    <textarea name="executeResult" class="form-control" id="exampleFormControlTextarea1" rows="10"
+                        placeholder="控制台" readonly></textarea>
+                </div>
+            </div>
+        </div>
+
+    <div id="SourceCodeFileName" hidden>HelloWorld</div>
+<!--    <div id="sourceCodeList">模板: </div>-->
 
     <script>
+        $(function () {
+            $('#jstree').jstree({ 'core' : {
+                'data' : [
+                   { "id": "测试文件夹", "parent": "#", "text": "测试文件夹" },
+                   { "id": "测试文件1", "parent": "测试文件夹", "text": "测试文件1" },
+                   { "id": "测试文件2", "parent": "测试文件夹", "text": "测试文件2" },
+                   { "id": "HelloWorld", "parent": "#", "text": "HelloWorld.java", "icon": "jstree-file"},
+                   { "id": "RemoteClassLoader", "parent": "#", "text": "RemoteClassLoader.java", "icon": "jstree-file"},
+                   { "id": "RemoteMonitor", "parent": "#", "text": "RemoteMonitor.java", "icon": "jstree-file"}
+                ]
+            }});
+            $('#jstree').on("changed.jstree", function (e, data) {
+                console.log(data.selected);
+                getSourceCodeByFileName(data.selected);
+            });
+        });
+
         var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
             mode: "text/x-java",
             lineNumbers: true,
@@ -59,24 +111,7 @@ public class HelloWorld {
             indentUnit: 4,
             indentWithTabs: true,
         });
-        editor.setSize('auto', '595');
-
-        var settings = {
-            "url": "/sourceCode/list",
-            "method": "GET",
-            "timeout": 0,
-            "processData": false,
-            "mimeType": "multipart/form-data",
-            "dataType": "json",
-            "contentType": false,
-            "data": null
-        };
-        $.ajax(settings).done(function (response) {
-            console.log(response);
-            for (var fileNameIndex in response) {
-                $('#sourceCodeList').append("<button type=\"button\" class=\"btn btn-primary btn-sm\" onclick=\"getSourceCodeByFileName('" + response[fileNameIndex] + "');\">" + response[fileNameIndex] + "</button> ");
-            }
-        });
+        editor.setSize('auto', '630');
 
         function getSourceCodeByFileName(name) {
             console.log(name);
