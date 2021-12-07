@@ -5,14 +5,14 @@
     <parent>
         <groupId>com.jzf</groupId>
         <artifactId>remote-coder</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>remote-core</artifactId>
     <packaging>jar</packaging>
 
-    <name>remote-debug</name>
-    <description>Demo project for Spring Boot</description>
+    <name>remote-core</name>
+    <description>Java project for Spring Boot</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -37,7 +37,7 @@
         <dependency>
             <groupId>com.jzf</groupId>
             <artifactId>dynamic-compiler</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
