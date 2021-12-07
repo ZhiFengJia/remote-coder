@@ -19,44 +19,47 @@
     <script src="/js/clike.js"></script>
     <script src="/jstree3.3.12/jstree.min.js"></script>
 
+    <style>
+    </style>
     <title>Web IDE</title>
 </head>
 
 <body class="container-fluid">
-        <div class="row border border-dark">
+        <div class="row border">
             <div class="col">
-                <div class="btn-group">
-                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-                        File
-                    </button>
-                    <div class="dropdown-menu">
-                        <button class="dropdown-item" type="button">Create File</button>
-                        <button class="dropdown-item" type="button">Delete File</button>
-                        <button class="dropdown-item" type="button">Rename File</button>
-                    </div>
-                </div>
-                <div class="btn-group">
-                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-                        Git
-                    </button>
-                    <div class="dropdown-menu">
-                        <button class="dropdown-item" type="button">Commit</button>
-                        <button class="dropdown-item" type="button">Pull</button>
-                        <button class="dropdown-item" type="button">Push</button>
-                    </div>
-                </div>
-                <button id="execute" class="btn btn-sm btn-primary" type="button">
-                    Run
-                    <span id="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
-                          style="display: none"></span>
-                </button>
+                <ul class="nav nav-pills">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-dark" data-toggle="dropdown" href="#" role="button" aria-expanded="false">File</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Create File</a>
+                            <a class="dropdown-item" href="#">Delete File</a>
+                            <a class="dropdown-item" href="#">Rename File</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Create folder</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-dark" data-toggle="dropdown" href="#" role="button" aria-expanded="false">Git</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Commit</a>
+                            <a class="dropdown-item" href="#">Pull</a>
+                            <a class="dropdown-item" href="#">Push</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a id="execute" class="nav-link text-dark" role="button">
+                            Run
+                            <span id="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
+                                  style="display: none"></span></a>
+                    </li>
+                </ul>
             </div>
         </div>
         <div class="row">
-            <div class="col-2 border border-dark">
+            <div class="col-2 border" style="padding-right:0px;padding-left:0px;">
                 <div id="jstree"></div>
             </div>
-            <div class="col-10 border border-dark">
+            <div class="col-10 border" style="padding-right:0px;padding-left:0px;">
                 <div class="editor_control">
                     <textarea class="form-control" id="code" name="code" style="display: none;" rows="30">
 /**
@@ -74,8 +77,8 @@ public class HelloWorld {
                 </div>
             </div>
         </div>
-        <div class="row border border-dark">
-            <div class="col">
+        <div class="row border">
+            <div class="col" style="padding-right:0px;padding-left:0px;">
                 <div class="form-group">
                     <textarea name="executeResult" class="form-control" id="exampleFormControlTextarea1" rows="10"
                         placeholder="控制台" readonly></textarea>
