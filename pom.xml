@@ -18,8 +18,8 @@
     <description>Java project for Spring Boot</description>
 
     <modules>
-        <module>dynamic-compiler</module>
         <module>remote-core</module>
+        <module>remote-web</module>
     </modules>
 
     <properties>
