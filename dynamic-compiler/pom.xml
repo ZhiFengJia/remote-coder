@@ -23,7 +23,7 @@
         <repository>
             <id>github</id>
             <name>GitHub OWNER Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/zhifengjia/maven-repository</url>
+            <url>https://maven.pkg.github.com/zhifengjia/remote-coder</url>
         </repository>
     </distributionManagement>
 

@@ -27,13 +27,15 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
+
     <distributionManagement>
         <repository>
             <id>github</id>
             <name>GitHub OWNER Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/zhifengjia/maven-repository</url>
+            <url>https://maven.pkg.github.com/zhifengjia/remote-coder</url>
         </repository>
     </distributionManagement>
+
     <build>
         <pluginManagement>
             <!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
