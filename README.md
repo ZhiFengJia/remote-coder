@@ -7,3 +7,9 @@
 ## 在线预览(域名暂没有备案,先使用IP访问)
 1. http://www.remotecoder.top/
 2. http://47.92.137.2/
+
+## 1分钟短视频介绍
+1. 【YouTube】https://youtu.be/zALju3BbV5s
+2. 【哔哩哔哩】https://b23.tv/zZve2g2
+
+## 项目开发中，敬请期待。
