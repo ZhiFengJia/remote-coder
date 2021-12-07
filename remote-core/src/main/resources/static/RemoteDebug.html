@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <!-- 必须的 meta 标签 -->
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap 的 CSS 文件 -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <!--使用Code Mirror必须引入的-->
+    <link rel="stylesheet" href="/css/codemirror.css">
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <!--使用Code Mirror必须引入的-->
+    <script src="/js/codemirror.js"></script>
+    <!--Java代码高亮引入-->
+    <script src="/js/clike.js"></script>
+
+    <style>
+        .CodeMirror {
+            line-height: 1.3em;
+            font-family: monospace;
+            /* Necessary so the scrollbar can be absolutely positioned within the wrapper on Lion. */
+            position: relative;
+            /* This prevents unwanted scrollbars from showing up on the body and wrapper in IE. */
+            overflow: hidden;
+            background-color: rgb(255, 255, 255);
+            width: 100%;
+            height: 100%;
+            margin-bottom: 0px;
+            color: #555555;
+            border: 1px solid #ccc;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+            -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+            -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
+            -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
+            -ms-transition: border linear 0.2s, box-shadow linear 0.2s;
+            -o-transition: border linear 0.2s, box-shadow linear 0.2s;
+            transition: border linear 0.2s, box-shadow linear 0.2s;
+        }
+
+        .CodeMirror-focused {
+            /* Copied from Bootstrap's textarea */
+            border-color: rgba(82, 168, 236, 0.8);
+            outline: 0;
+            outline: thin dotted \9;
+            /* IE6-9 */
+
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+            -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+        }
+
+        .editor_control {
+            width: auto;
+            height: auto;
+        }
+    </style>
+    <title>远端调试</title>
+</head>
+
+<body>
+    <div id="SourceCodeFileName" hidden>HelloWorld</div>
+    <div id="sourceCodeList">模板: </div>
+    <div class="editor_control">
+        <textarea class="form-control" id="code" name="code" style="display: none;" rows="30">
+/**
+ * 简单示例
+ *
+ * @author jiazhifeng
+ * @date 2021/12/07 10:14
+ */
+public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("HelloWorld");
+    }
+}
+        </textarea>
+    </div>
+    <button id="execute" class="btn btn-primary" type="button">
+        执行
+        <span id="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
+            style="display: none"></span>
+    </button>
+    <div class="form-group">
+        <textarea name="executeResult" class="form-control" id="exampleFormControlTextarea1" rows="10"
+            placeholder="执行结果" readonly></textarea>
+    </div>
+
+    <script>
+        var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+            mode: "text/x-java",
+            lineNumbers: true,
+            matchBrackets: true,
+            indentUnit: 4,
+            indentWithTabs: true,
+        });
+        editor.setSize('auto', '595');
+
+        var settings = {
+            "url": "/sourceCode/list",
+            "method": "GET",
+            "timeout": 0,
+            "processData": false,
+            "mimeType": "multipart/form-data",
+            "dataType": "json",
+            "contentType": false,
+            "data": null
+        };
+        $.ajax(settings).done(function (response) {
+            console.log(response);
+            for (var fileNameIndex in response) {
+                $('#sourceCodeList').append("<button type=\"button\" class=\"btn btn-primary btn-sm\" onclick=\"getSourceCodeByFileName('" + response[fileNameIndex] + "');\">" + response[fileNameIndex] + "</button> ");
+            }
+        });
+
+        function getSourceCodeByFileName(name) {
+            console.log(name);
+            var settings = {
+                "url": "/sourceCode/" + name,
+                "method": "POST",
+                "timeout": 0,
+                "processData": false,
+                "mimeType": "multipart/form-data",
+                "contentType": false,
+                "data": null
+            };
+            $.ajax(settings).done(function (response) {
+                $('#SourceCodeFileName').text(name);
+                editor.setValue(response);
+            });
+        }
+
+        $('#execute').click(function () {
+            $('#execute').attr("disabled", true);
+            $('#loading').show();
+            var form = new FormData();
+            form.append("className", $('#SourceCodeFileName').text());
+            form.append("sourceCode", editor.getValue());
+
+            var settings = {
+                "url": "/remote/executeJavaSourceCode",
+                "method": "POST",
+                "timeout": 0,
+                "processData": false,
+                "mimeType": "multipart/form-data",
+                "contentType": false,
+                "data": form
+            };
+            $.ajax(settings).done(function (response) {
+                $("textarea[name='executeResult']").val(response);
+                $('#execute').attr("disabled", false);
+                $('#loading').hide();
+            });
+        });
+    </script>
+</body>
+
+</html>
