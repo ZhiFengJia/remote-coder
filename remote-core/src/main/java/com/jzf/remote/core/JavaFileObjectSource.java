@@ -16,7 +16,7 @@ public class JavaFileObjectSource extends SimpleJavaFileObject {
     private final CharSequence content;
 
     protected JavaFileObjectSource(String className, CharSequence content) {
-        super(URI.create("string:///" + className.replaceAll("\\.", "/") + Kind.SOURCE.extension), Kind.SOURCE);
+        super(URI.create("string:///" + className + Kind.SOURCE.extension), Kind.SOURCE);
         this.content = content;
     }
 

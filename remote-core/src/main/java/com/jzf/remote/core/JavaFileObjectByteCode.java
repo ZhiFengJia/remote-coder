@@ -20,7 +20,7 @@ public class JavaFileObjectByteCode extends SimpleJavaFileObject {
     private final ByteArrayOutputStream byteArrayOutputStream;
 
     protected JavaFileObjectByteCode(String className) {
-        super(URI.create("string:///" + className.replaceAll("\\.", "/") + Kind.CLASS.extension), Kind.CLASS);
+        super(URI.create("string:///" + className + Kind.CLASS.extension), Kind.CLASS);
         this.byteArrayOutputStream = new ByteArrayOutputStream();
     }
 

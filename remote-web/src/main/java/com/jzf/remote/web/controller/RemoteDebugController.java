@@ -4,7 +4,6 @@ import com.jzf.remote.core.JavaFileExecuter;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author jiazhifeng
@@ -27,18 +26,13 @@ public class RemoteDebugController {
      * 2.监控服务的内存占用,线程堆栈信息等等.
      * 3.可以把这段调式代码想象成打包部署时就已经存在项目中一样.
      *
-     * @param file 待执行的java文件
+     * @param className  待编译的Java文件名称
+     * @param sourceCode 待编译的Java源码
      * @return java文件执行结果
      */
-    @PostMapping("/executeJavaSourceFile")
-    public String executeJavaSourceFile(MultipartFile file) throws Exception {
-        String className = file.getOriginalFilename().replace(".java", "");
-        String sourceCode = new String(file.getBytes());
-        return JavaFileExecuter.execute(className, sourceCode);
-    }
-
     @PostMapping("/executeJavaSourceCode")
     public String executeJavaSourceCode(String className, String sourceCode) throws Exception {
+        className = className.substring(className.lastIndexOf("\\") + 1, className.lastIndexOf("."));
         return JavaFileExecuter.execute(className, sourceCode);
     }
 }

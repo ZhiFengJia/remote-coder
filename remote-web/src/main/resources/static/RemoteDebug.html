@@ -84,24 +84,33 @@ public class HelloWorld {
     </div>
 </div>
 
-<div id="SourceCodeFileName" hidden>HelloWorld</div>
-<!--    <div id="sourceCodeList">模板: </div>-->
+<div id="SourceCodeFileName" hidden>HelloWorld.java</div>
 
 <script>
 $(function () {
-    $('#jstree').jstree({ 'core' : {
-        'data' : [
-           { "id": "测试文件夹", "parent": "#", "text": "测试文件夹" },
-           { "id": "测试文件1", "parent": "测试文件夹", "text": "测试文件1" },
-           { "id": "测试文件2", "parent": "测试文件夹", "text": "测试文件2" },
-           { "id": "HelloWorld", "parent": "#", "text": "HelloWorld.java", "icon": "jstree-file"},
-           { "id": "RemoteClassLoader", "parent": "#", "text": "RemoteClassLoader.java", "icon": "jstree-file"},
-           { "id": "RemoteMonitor", "parent": "#", "text": "RemoteMonitor.java", "icon": "jstree-file"}
-        ]
-    }});
+    var settings = {
+            "url": "/project/tree",
+            "method": "GET",
+            "timeout": 0,
+            "processData": false,
+            "mimeType": "multipart/form-data",
+            "dataType": "json",
+            "contentType": false,
+            "data": null
+    };
+    $.ajax(settings).done(function (response) {
+        console.log(response);
+        $('#jstree').jstree({
+            "plugins" : [ "wholerow" ],
+            "core" : {
+                'data' : response
+            }
+        });
+    });
+
     $('#jstree').on("changed.jstree", function (e, data) {
-        console.log(data.selected);
-        getSourceCodeByFileName(data.selected);
+        console.log(data);
+        getFileByPath(data.selected);
     });
 });
 
@@ -112,23 +121,28 @@ var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
     indentUnit: 4,
     indentWithTabs: true,
 });
-editor.setSize('auto', '630');
+editor.setSize('auto', '620');
 
-function getSourceCodeByFileName(name) {
-    console.log(name);
-    var settings = {
-        "url": "/sourceCode/" + name,
-        "method": "POST",
-        "timeout": 0,
-        "processData": false,
-        "mimeType": "multipart/form-data",
-        "contentType": false,
-        "data": null
-    };
-    $.ajax(settings).done(function (response) {
-        $('#SourceCodeFileName').text(name);
-        editor.setValue(response);
-    });
+function getFileByPath(filePath) {
+    console.log(filePath);
+    if( /^.*\.java$/.test(filePath)){
+        console.log("正在从服务器获取文件内容");
+        var form = new FormData();
+        form.append("filePath", filePath);
+        var settings = {
+            "url": "/project/getFile",
+            "method": "POST",
+            "timeout": 0,
+            "processData": false,
+            "mimeType": "multipart/form-data",
+            "contentType": false,
+            "data": form
+        };
+        $.ajax(settings).done(function (response) {
+            $('#SourceCodeFileName').text(filePath);
+            editor.setValue(response);
+        });
+    }
 }
 
 $('#execute').click(function () {
