@@ -54,7 +54,7 @@ public class TreeDTOTest {
     public void test3() {
         String className = "\\DemoProject\\RemoteClassLoader.java";
         System.out.println(className);
-        className = className.substring(className.lastIndexOf("\\"), className.lastIndexOf("."));
+        className = className.substring(className.lastIndexOf("\\") + 1, className.lastIndexOf("."));
         System.out.println(className);
     }
 }

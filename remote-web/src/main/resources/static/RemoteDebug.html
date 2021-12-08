@@ -124,25 +124,34 @@ var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
 editor.setSize('auto', '620');
 
 function getFileByPath(filePath) {
-    console.log(filePath);
-    if( /^.*\.java$/.test(filePath)){
-        console.log("正在从服务器获取文件内容");
-        var form = new FormData();
-        form.append("filePath", filePath);
-        var settings = {
-            "url": "/project/getFile",
-            "method": "POST",
-            "timeout": 0,
-            "processData": false,
-            "mimeType": "multipart/form-data",
-            "contentType": false,
-            "data": form
-        };
-        $.ajax(settings).done(function (response) {
-            $('#SourceCodeFileName').text(filePath);
-            editor.setValue(response);
-        });
-    }
+    console.log("当前选择的节点:" + filePath);
+    var form = new FormData();
+    form.append("filePath", filePath[0]);
+    var settings = {
+        "url": "/project/getFile",
+        "method": "POST",
+        "timeout": 0,
+        "processData": false,
+        "mimeType": "multipart/form-data",
+        "contentType": false,
+        "data": form
+    };
+    $.ajax(settings).done(function (response) {
+        if(response.valueOf() == ""){
+            console.log("当前选择的节点是文件夹");
+            return;
+        }
+        editor.setValue(response);
+
+        var packageStr = editor.getLine(0);
+        var className = filePath[0].substring(filePath[0].lastIndexOf("\\") + 1,filePath[0].lastIndexOf("."));
+        if(/^package.*$/.test(packageStr)){
+            className = packageStr.substring(8,packageStr.indexOf(";")) + "/" + className;
+            className = className.replace(/\./g,"/");
+        }
+        console.log("className:" + className);
+        $('#SourceCodeFileName').text(className);
+    });
 }
 
 $('#execute').click(function () {

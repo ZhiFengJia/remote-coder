@@ -32,7 +32,6 @@ public class RemoteDebugController {
      */
     @PostMapping("/executeJavaSourceCode")
     public String executeJavaSourceCode(String className, String sourceCode) throws Exception {
-        className = className.substring(className.lastIndexOf("\\") + 1, className.lastIndexOf("."));
         return JavaFileExecuter.execute(className, sourceCode);
     }
 }

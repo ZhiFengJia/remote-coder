@@ -23,7 +23,12 @@ public class projectController {
 
     @PostMapping("/getFile")
     public String getFile(String filePath) throws IOException {
-        return FileUtils.readFileToString(new File(TreeUtils.fileDirectory + filePath), Charset.forName("UTF-8"));
+        File file = new File(TreeUtils.fileDirectory + filePath);
+        if (file.isFile()){
+            return FileUtils.readFileToString(file, Charset.forName("UTF-8"));
+        }else{
+            return "";
+        }
     }
 
     @GetMapping("/tree")

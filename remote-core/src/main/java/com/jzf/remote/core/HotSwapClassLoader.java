@@ -34,6 +34,6 @@ public class HotSwapClassLoader extends ClassLoader {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        return super.defineClass(name, modiBytes, 0, modiBytes.length);
+        return super.defineClass(name.replaceAll("/","."), modiBytes, 0, modiBytes.length);
     }
 }
