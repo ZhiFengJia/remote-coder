@@ -7,9 +7,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" href="/bootstrap-5.1.3/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/jstree3.3.12/themes/default/style.min.css" />
-    <link rel="stylesheet" href="/codemirror-5.64.0/lib/codemirror.css">
+    <link rel="stylesheet" href="/bootstrap-5.1.3/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/jstree3.3.12/themes/default/style.min.css"/>
+    <link rel="stylesheet" href="/codemirror-5.64.0/lib/codemirror.css"/>
 
     <script src="/jquery-3.6.0/jquery-3.6.0.min.js"></script>
     <script src="/bootstrap-5.1.3/js/bootstrap.bundle.min.js"></script>
@@ -17,49 +17,49 @@
     <script src="/codemirror-5.64.0/lib/codemirror.js"></script>
     <script src="/codemirror-5.64.0/mode/clike/clike.js"></script>  <!--Java代码高亮-->
 
-    <style>
-    </style>
     <title>Web IDE</title>
 </head>
 
 <body class="container-fluid">
-        <div class="row border">
-            <div class="col">
-                <ul class="nav nav-pills">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-dark" data-toggle="dropdown" href="#" role="button" aria-expanded="false">File</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Create File</a>
-                            <a class="dropdown-item" href="#">Delete File</a>
-                            <a class="dropdown-item" href="#">Rename File</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Create folder</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-dark" data-toggle="dropdown" href="#" role="button" aria-expanded="false">Git</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Commit</a>
-                            <a class="dropdown-item" href="#">Pull</a>
-                            <a class="dropdown-item" href="#">Push</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a id="execute" class="nav-link text-dark" role="button">
-                            Run
-                            <span id="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
-                                  style="display: none"></span></a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-2 border" style="padding-right:0px;padding-left:0px;">
-                <div id="jstree"></div>
-            </div>
-            <div class="col-10 border" style="padding-right:0px;padding-left:0px;">
-                <div class="editor_control">
-                    <textarea class="form-control" id="code" name="code" style="display: none;" rows="30">
+<div class="row border">
+    <div class="col">
+        <ul class="nav nav-pills">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-dark" data-toggle="dropdown" href="#" role="button"
+                   aria-expanded="false">File</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Create File</a>
+                    <a class="dropdown-item" href="#">Delete File</a>
+                    <a class="dropdown-item" href="#">Rename File</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Create folder</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-dark" data-toggle="dropdown" href="#" role="button"
+                   aria-expanded="false">Git</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Commit</a>
+                    <a class="dropdown-item" href="#">Pull</a>
+                    <a class="dropdown-item" href="#">Push</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a id="execute" class="nav-link text-dark" role="button">
+                    Run
+                    <span id="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
+                          style="display: none"></span></a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="row">
+    <div class="col-2 border" style="padding-right:0px;padding-left:0px;">
+        <div id="jstree"></div>
+    </div>
+    <div class="col-10 border" style="padding-right:0px;padding-left:0px;">
+        <div class="editor_control">
+            <textarea class="form-control" id="code" name="code" style="display: none;" rows="30">
 /**
  * 简单示例
  *
@@ -71,89 +71,88 @@ public class HelloWorld {
         System.out.println("HelloWorld");
     }
 }
-                    </textarea>
-                </div>
-            </div>
+            </textarea>
         </div>
-        <div class="row border">
-            <div class="col" style="padding-right:0px;padding-left:0px;">
-                <div class="form-group">
-                    <textarea name="executeResult" class="form-control" id="exampleFormControlTextarea1" rows="10"
-                        placeholder="控制台" readonly></textarea>
-                </div>
-            </div>
+    </div>
+</div>
+<div class="row border">
+    <div class="col" style="padding-right:0px;padding-left:0px;">
+        <div class="form-group">
+            <textarea name="executeResult" class="form-control" id="exampleFormControlTextarea1" rows="10"
+                      placeholder="控制台" readonly></textarea>
         </div>
+    </div>
+</div>
 
-    <div id="SourceCodeFileName" hidden>HelloWorld</div>
+<div id="SourceCodeFileName" hidden>HelloWorld</div>
 <!--    <div id="sourceCodeList">模板: </div>-->
 
-    <script>
-        $(function () {
-            $('#jstree').jstree({ 'core' : {
-                'data' : [
-                   { "id": "测试文件夹", "parent": "#", "text": "测试文件夹" },
-                   { "id": "测试文件1", "parent": "测试文件夹", "text": "测试文件1" },
-                   { "id": "测试文件2", "parent": "测试文件夹", "text": "测试文件2" },
-                   { "id": "HelloWorld", "parent": "#", "text": "HelloWorld.java", "icon": "jstree-file"},
-                   { "id": "RemoteClassLoader", "parent": "#", "text": "RemoteClassLoader.java", "icon": "jstree-file"},
-                   { "id": "RemoteMonitor", "parent": "#", "text": "RemoteMonitor.java", "icon": "jstree-file"}
-                ]
-            }});
-            $('#jstree').on("changed.jstree", function (e, data) {
-                console.log(data.selected);
-                getSourceCodeByFileName(data.selected);
-            });
-        });
+<script>
+$(function () {
+    $('#jstree').jstree({ 'core' : {
+        'data' : [
+           { "id": "测试文件夹", "parent": "#", "text": "测试文件夹" },
+           { "id": "测试文件1", "parent": "测试文件夹", "text": "测试文件1" },
+           { "id": "测试文件2", "parent": "测试文件夹", "text": "测试文件2" },
+           { "id": "HelloWorld", "parent": "#", "text": "HelloWorld.java", "icon": "jstree-file"},
+           { "id": "RemoteClassLoader", "parent": "#", "text": "RemoteClassLoader.java", "icon": "jstree-file"},
+           { "id": "RemoteMonitor", "parent": "#", "text": "RemoteMonitor.java", "icon": "jstree-file"}
+        ]
+    }});
+    $('#jstree').on("changed.jstree", function (e, data) {
+        console.log(data.selected);
+        getSourceCodeByFileName(data.selected);
+    });
+});
 
-        var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-            mode: "text/x-java",
-            lineNumbers: true,
-            matchBrackets: true,
-            indentUnit: 4,
-            indentWithTabs: true,
-        });
-        editor.setSize('auto', '630');
+var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+    mode: "text/x-java",
+    lineNumbers: true,
+    matchBrackets: true,
+    indentUnit: 4,
+    indentWithTabs: true,
+});
+editor.setSize('auto', '630');
 
-        function getSourceCodeByFileName(name) {
-            console.log(name);
-            var settings = {
-                "url": "/sourceCode/" + name,
-                "method": "POST",
-                "timeout": 0,
-                "processData": false,
-                "mimeType": "multipart/form-data",
-                "contentType": false,
-                "data": null
-            };
-            $.ajax(settings).done(function (response) {
-                $('#SourceCodeFileName').text(name);
-                editor.setValue(response);
-            });
-        }
+function getSourceCodeByFileName(name) {
+    console.log(name);
+    var settings = {
+        "url": "/sourceCode/" + name,
+        "method": "POST",
+        "timeout": 0,
+        "processData": false,
+        "mimeType": "multipart/form-data",
+        "contentType": false,
+        "data": null
+    };
+    $.ajax(settings).done(function (response) {
+        $('#SourceCodeFileName').text(name);
+        editor.setValue(response);
+    });
+}
 
-        $('#execute').click(function () {
-            $('#execute').attr("disabled", true);
-            $('#loading').show();
-            var form = new FormData();
-            form.append("className", $('#SourceCodeFileName').text());
-            form.append("sourceCode", editor.getValue());
+$('#execute').click(function () {
+    $('#execute').attr("disabled", true);
+    $('#loading').show();
+    var form = new FormData();
+    form.append("className", $('#SourceCodeFileName').text());
+    form.append("sourceCode", editor.getValue());
 
-            var settings = {
-                "url": "/remote/executeJavaSourceCode",
-                "method": "POST",
-                "timeout": 0,
-                "processData": false,
-                "mimeType": "multipart/form-data",
-                "contentType": false,
-                "data": form
-            };
-            $.ajax(settings).done(function (response) {
-                $("textarea[name='executeResult']").val(response);
-                $('#execute').attr("disabled", false);
-                $('#loading').hide();
-            });
-        });
-    </script>
+    var settings = {
+        "url": "/remote/executeJavaSourceCode",
+        "method": "POST",
+        "timeout": 0,
+        "processData": false,
+        "mimeType": "multipart/form-data",
+        "contentType": false,
+        "data": form
+    };
+    $.ajax(settings).done(function (response) {
+        $("textarea[name='executeResult']").val(response);
+        $('#execute').attr("disabled", false);
+        $('#loading').hide();
+    });
+});
+</script>
 </body>
-
 </html>
