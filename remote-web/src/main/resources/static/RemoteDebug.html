@@ -2,7 +2,6 @@
 <html lang="zh-CN">
 
 <head>
-    <!-- 必须的 meta 标签 -->
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -41,20 +40,34 @@
                 <a class="nav-link dropdown-toggle text-dark" data-toggle="dropdown" href="#" role="button"
                    aria-expanded="false">File</a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Create File</a>
-                    <a class="dropdown-item" href="#">Delete File</a>
-                    <a class="dropdown-item" href="#">Rename File</a>
+                    <a class="dropdown-item" href="#">Create File or folder</a>
+                    <a class="dropdown-item" href="#">Delete File or folder</a>
+                    <a class="dropdown-item" href="#">Rename File or folder</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Create folder</a>
+                    <a class="dropdown-item" href="#">开发中...</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle text-dark" data-toggle="dropdown" href="#" role="button"
                    aria-expanded="false">Git</a>
                 <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Clone Project From GitHub</a>
                     <a class="dropdown-item" href="#">Commit</a>
                     <a class="dropdown-item" href="#">Pull</a>
                     <a class="dropdown-item" href="#">Push</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">开发中...</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-dark" data-toggle="dropdown" href="#" role="button"
+                   aria-expanded="false">Help</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">About</a>
+                    <a class="dropdown-item" href="https://github.com/ZhiFengJia/remote-coder" target="_blank">Go to
+                        GitHub Home</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">开发中...</a>
                 </div>
             </li>
             <li class="nav-item">
@@ -67,7 +80,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-2 border" style="padding-right:0px;padding-left:0px;">
+    <div class="col-2 border overflow-auto" style="padding-right:0px;padding-left:0px;">
         <div id="jstree"></div>
     </div>
     <div class="col-10 border" style="padding-right:0px;padding-left:0px;">
@@ -83,11 +96,11 @@
                 <div class="editor_control">
                         <textarea class="form-control" id="code" name="code" style="display: none;">
 /**
-* 简单示例
-*
-* @author jiazhifeng
-* @date 2021/12/07 10:14
-*/
+ * 简单示例
+ *
+ * @author jiazhifeng
+ * @date 2021/12/07 10:14
+ */
 public class HelloWorld {
     public static void main(String[] args) {
         System.out.println("HelloWorld");
@@ -101,9 +114,23 @@ public class HelloWorld {
 </div>
 <div class="row border">
     <div class="col" style="padding-right:0px;padding-left:0px;">
-        <div class="form-group">
-                <textarea name="executeResult" class="form-control" id="exampleFormControlTextarea1"
-                          style="height: 245px;" placeholder="控制台" readonly></textarea>
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a class="nav-link active" id="nav-console-tab" data-toggle="tab" href="#nav-console" role="tab"
+                   aria-controls="nav-console" aria-selected="true">Console</a>
+                <a class="nav-link" id="nav-terminal-tab" data-toggle="tab" href="#nav-terminal" role="tab"
+                   aria-controls="nav-terminal" aria-selected="false">Terminal</a>
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent" style="height: 200px;">
+            <div class="tab-pane fade show active" id="nav-console" role="tabpanel"
+                 aria-labelledby="nav-console-tab">
+                    <textarea id="console" class="form-control" style="height: 200px;" placeholder="控制台"
+                              readonly></textarea>
+            </div>
+            <div class="tab-pane fade" id="nav-terminal" role="tabpanel" aria-labelledby="nav-terminal-tab">
+                开发中...
+            </div>
         </div>
     </div>
 </div>
@@ -200,7 +227,7 @@ public class HelloWorld {
                 "data": form
             };
             $.ajax(settings).done(function (response) {
-                $("textarea[name='executeResult']").val(response);
+                $("#console").val(response);
                 $('#execute').attr("disabled", false);
                 $('#loading').hide();
             });
