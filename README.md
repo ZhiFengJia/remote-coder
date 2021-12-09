@@ -18,7 +18,8 @@
 3. 代码运行
 4. 控制台输出
 
-![image](https://user-images.githubusercontent.com/28912477/145361694-63af8701-9155-46ef-b985-312cbf8afcbc.png)
+![image](https://user-images.githubusercontent.com/28912477/145392669-b140ecb3-2981-408d-b212-e2bf7a8bbef6.png)
+
 
 
 ## 项目开发中，敬请期待。
