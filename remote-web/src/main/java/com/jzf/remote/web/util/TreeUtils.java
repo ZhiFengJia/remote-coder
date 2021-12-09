@@ -16,9 +16,10 @@ public class TreeUtils {
             File[] files = fileDir.listFiles();
             if (files != null) {
                 for (File file : files) {
-                    String filePath = file.getPath().substring(fileDirectory.length() - 1);
+                    String filePath = file.getPath().substring(fileDirectory.length() - 1)
+                            .replaceAll("\\\\", "/");
                     if (file.isDirectory()) {
-                        TreeDTO treeDTO = new TreeDTO(filePath, file.getName(), TreeDTO.FOLDER_ICON);
+                        TreeDTO treeDTO = new TreeDTO(filePath + "/", file.getName(), TreeDTO.FOLDER_ICON);
                         tree.getChildren().add(treeDTO);
                         generateTree(file, treeDTO);
                     } else {
