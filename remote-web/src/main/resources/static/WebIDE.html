@@ -8,10 +8,13 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
           integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/themes/default/style.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/themes/default/style.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/theme/darcula.min.css"
+          integrity="sha512-kqCOYFDdyQF4JM8RddA6rMBi9oaLdR0aEACdB95Xl1EgaBhaXMIe8T4uxmPitfq4qRmHqo+nBU2d1l+M4zUx1g=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/codemirror.min.css"
           integrity="sha512-CCnciBUnVXwa6IQT9q8EmGcarNit9GdKI5nJnj56B1iu0LuD13Qn/GZ+IUkrZROZaBdutN718NK6mIXdUjZGqg=="
-          crossorigin="anonymous" referrerpolicy="no-referrer" />
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -29,15 +32,49 @@
             integrity="sha512-GAled7oA9WlRkBaUQlUEgxm37hf43V2KEMaEiWlvBO/ueP2BLvBLKN5tIJu4VZOTwo6Z4XvrojYngoN9dJw2ug=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    <style>
+        a {
+            color: rgb(205,205,205);
+        }
+        a:hover {
+            color: rgb(61,64,67);
+        }
+        .nav-pills .show>.nav-link {
+            color: #fff;
+            background-color: rgb(61,64,67);
+        }
+        .nav-link, .nav-tabs .nav-link.active {
+            color: #495057;
+            background-color: rgb(61,64,67);
+            border-color: #dee2e6 #dee2e6 #fff;
+        }
+        .nav .nav-tabs .card-header-tabs{
+            background-color: rgb(32,33,36);
+        }
+        .form-control[readonly] {
+            color: rgb(205,205,205);
+            background-color: #0a0a0a;
+        }
+        .jstree-default .jstree-wholerow-clicked {
+            background: rgb(13,41,42);
+        }
+        .dropdown-menu {
+            background-color: rgb(32,33,36);
+        }
+        dropdown-item {
+            color: rgb(205,205,205);
+        }
+    </style>
+
     <title>Web IDE</title>
 </head>
 
-<body class="container-fluid">
+<body class="container-fluid" style="background-color: rgb(32,33,36);">
 <div class="row">
     <div class="col">
         <ul class="nav nav-pills">
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle text-dark" data-toggle="dropdown" href="#" role="button"
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
                    aria-expanded="false">File</a>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="#">Create File or folder</a>
@@ -48,7 +85,7 @@
                 </div>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle text-dark" data-toggle="dropdown" href="#" role="button"
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
                    aria-expanded="false">Git</a>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="#">Clone Project From GitHub</a>
@@ -60,7 +97,7 @@
                 </div>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle text-dark" data-toggle="dropdown" href="#" role="button"
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
                    aria-expanded="false">Help</a>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#aboutModal">About</a>
@@ -70,7 +107,7 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a id="execute" class="nav-link text-dark" role="button">
+                <a id="execute" class="nav-link" role="button">
                     Run
                     <span id="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
                           style="display: none"></span></a>
@@ -81,14 +118,14 @@
 <div class="row">
     <div class="col-2" style="padding-right:0px;padding-left:0px;">
         <div class="card" style="border:0em;">
-            <div class="card-header" style="padding-left:0.5rem;padding-top: 0px;width: 100rem;">
+            <div class="card-header" style="padding-left:0.5rem;padding-top: 0px;width: 50rem;">
                 <ul class="nav nav-tabs card-header-tabs">
                     <li class="nav-item">
                         <a class="nav-link active" href="#">Project</a>
                     </li>
                 </ul>
             </div>
-            <div class="card-body overflow-auto" style="padding-right:0px;padding-left:0px;padding:0px;height: 600px;">
+            <div class="card-body overflow-auto" style="padding-right:0px;padding-left:0px;padding:0px;height: 600px;background-color: rgb(61,64,67);color: rgb(205,205,205);">
                 <div id="jstree"></div>
             </div>
         </div>
@@ -207,9 +244,10 @@ public class HelloWorld {
             lineNumbers: true,
             matchBrackets: true,
             indentUnit: 4,
-            indentWithTabs: true,
+            indentWithTabs: true,ambiance,blackboard
         });
         editor.setSize('auto', '600');
+        editor.setOption("theme", 'darcula');
 
         function getFileByPath(filePath) {
             console.log("当前选择的节点:" + filePath);
@@ -264,7 +302,8 @@ public class HelloWorld {
                 $('#loading').hide();
             });
         });
-    </script>
+
+</script>
 </body>
 
 </html>
