@@ -33,7 +33,7 @@
 </head>
 
 <body class="container-fluid">
-<div class="row border">
+<div class="row">
     <div class="col">
         <ul class="nav nav-pills">
             <li class="nav-item dropdown">
@@ -79,10 +79,21 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-2 border overflow-auto" style="padding-right:0px;padding-left:0px;">
-        <div id="jstree"></div>
+    <div class="col-2" style="padding-right:0px;padding-left:0px;">
+        <div class="card" style="border:0em;">
+            <div class="card-header" style="padding-left:0.5rem;padding-top: 0px;width: 100rem;">
+                <ul class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Project</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body overflow-auto" style="padding-right:0px;padding-left:0px;padding:0px;height: 600px;">
+                <div id="jstree"></div>
+            </div>
+        </div>
     </div>
-    <div class="col-10 border" style="padding-right:0px;padding-left:0px;">
+    <div class="col-10" style="padding-right:0px;padding-left:0px;">
         <div class="card">
             <div class="card-header" style="padding-left:0.5rem;padding-top: 0px;">
                 <ul class="nav nav-tabs card-header-tabs">
