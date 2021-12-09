@@ -63,11 +63,10 @@
                 <a class="nav-link dropdown-toggle text-dark" data-toggle="dropdown" href="#" role="button"
                    aria-expanded="false">Help</a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">About</a>
-                    <a class="dropdown-item" href="https://github.com/ZhiFengJia/remote-coder" target="_blank">Go to
-                        GitHub Home</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">开发中...</a>
+                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#aboutModal">About</a>
+                    <a class="dropdown-item" href="https://github.com/ZhiFengJia/remote-coder" target="_blank">
+                        Go to GitHub Home
+                    </a>
                 </div>
             </li>
             <li class="nav-item">
@@ -136,6 +135,28 @@ public class HelloWorld {
 </div>
 
 <div id="className" hidden>HelloWorld</div>
+
+<!-- Modal -->
+<div class="modal fade" id="aboutModal" tabindex="-1" aria-labelledby="aboutModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="aboutModalLabel">项目简介</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                项目的目标是建立一种基于云的集成开发环境 (IDE)，您只需要一个浏览器，即可编写、运行和调试代码。
+                它包括一个代码编辑器、调试程序和终端。您无需安装文件或配置开发计算机，即可开始新的项目。
+                项目基于云，因此您可以从办公室、家中或任何地方使用已连接互联网的计算机完成项目。
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
         $(function () {
