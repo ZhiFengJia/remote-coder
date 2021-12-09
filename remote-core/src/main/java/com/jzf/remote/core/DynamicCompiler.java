@@ -1,7 +1,9 @@
 package com.jzf.remote.core;
 
-import javax.tools.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.tools.*;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -14,6 +16,7 @@ import java.util.Locale;
  * @date 2021/11/25 14:53
  */
 public class DynamicCompiler {
+    private static final Logger LOG = LoggerFactory.getLogger(DynamicCompiler.class);
     private final JavaCompiler javaCompiler;
     private final DiagnosticCollector<JavaFileObject> diagnosticCollector;
     private final ClassFileManager fileManager;
@@ -41,15 +44,15 @@ public class DynamicCompiler {
                 Arrays.asList(fileObject));
         boolean result = task.call();
         diagnosticCollector.getDiagnostics().forEach(diagnostic -> {
-            System.out.println("msg:" + diagnostic.getMessage(Locale.getDefault()));
-            System.out.println("source:" + diagnostic.getSource() + " line:" + diagnostic.getLineNumber());
+            LOG.info("msg:{}", diagnostic.getMessage(Locale.getDefault()));
+            LOG.info("source:{} line:{}", diagnostic.getSource(), diagnostic.getLineNumber());
         });
         if (result) {
-            System.out.println("Compiler Succeeded");
+            LOG.info("Compiler Succeeded");
             HotSwapClassLoader hotSwapClassLoader = new HotSwapClassLoader(fileManager.getBytes());
             return hotSwapClassLoader.loadClass(className);
         } else {
-            System.out.println("Compiler failure!");
+            LOG.info("Compiler failure!");
             return null;
         }
     }
