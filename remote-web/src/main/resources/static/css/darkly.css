@@ -127,7 +127,7 @@ a:hover {
     padding-left: 0px;
     padding: 0px;
     height: 600px;
-    background-color: rgb(61, 64, 67);
+    background-color: rgb(60, 63, 65);
     color: rgb(205, 205, 205);
 }
 
@@ -181,6 +181,11 @@ a:hover {
     background: rgb(32, 33, 36);
 }
 
+.CodeMirror-gutter-filler,
+.CodeMirror-scrollbar-filler {
+    background-color: rgb(32, 33, 36);
+}
+
 
 /*定义滚动条高宽及背景
  高宽分别对应横竖滚动条的尺寸*/
@@ -196,7 +201,6 @@ a:hover {
   内阴影+圆角*/
 
 ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgb(100, 100, 100);
     border-radius: 0px;
     background-color: rgb(32, 33, 36);
 }
@@ -206,7 +210,14 @@ a:hover {
   内阴影+圆角*/
 
 ::-webkit-scrollbar-thumb {
-    -webkit-box-shadow: inset 0 0 6px rgb(100, 100, 100);
     border-radius: 0px;
-    background-color: rgb(100, 100, 100);
+    background-color: rgb(66, 66, 66);
+}
+
+
+/*定义滑块获得焦点
+  内阴影+圆角*/
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(79, 79, 79);
 }
