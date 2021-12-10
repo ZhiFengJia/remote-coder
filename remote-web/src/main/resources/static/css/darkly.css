@@ -6,36 +6,43 @@
     flex-direction: column;
     min-width: 0;
     word-wrap: break-word;
-    background-color: rgb(32,33,36);
+    background-color: rgb(32, 33, 36);
     background-clip: border-box;
     border: 0px;
     border-radius: 0.25rem;
 }
+
 .card-header {
     padding: 0rem;
 }
-.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
-    color: rgb(205,205,205);
-    background-color: rgb(61,64,67);
-    border-color: rgb(205,205,205);
+
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+    color: rgb(205, 205, 205);
+    background-color: rgb(61, 64, 67);
+    border-color: rgb(205, 205, 205);
 }
+
 .nav-tabs .nav-link {
     margin-bottom: 0px;
     border: 0px;
 }
+
 .nav-tabs {
     border-bottom: 0px;
 }
+
 body {
     margin: 0;
-    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
-    color: rgb(205,205,205);
+    color: rgb(205, 205, 205);
     text-align: left;
-    background-color: rgb(32,33,36);
+    background-color: rgb(32, 33, 36);
 }
+
 .form-control {
     display: block;
     width: 100%;
@@ -47,27 +54,34 @@ body {
     background-clip: padding-box;
     border: 1px solid #2b2b2b;
     border-radius: 0.25rem;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
-.form-control:disabled, .form-control[readonly] {
+
+.form-control:disabled,
+.form-control[readonly] {
     background-color: #2b2b2b;
-    color: rgb(205,205,205);
+    color: rgb(205, 205, 205);
     opacity: 1;
     height: 13.4rem;
 }
+
 a {
-    color: rgb(205,205,205);
+    color: rgb(205, 205, 205);
     text-decoration: none;
     background-color: transparent;
 }
+
 a:hover {
     color: #ffffff;
     text-decoration: underline;
 }
-.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
-    color: rgb(205,205,205);
-    background-color: rgb(61,64,67);
+
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+    color: rgb(205, 205, 205);
+    background-color: rgb(61, 64, 67);
 }
+
 .dropdown-menu {
     position: absolute;
     top: 100%;
@@ -79,51 +93,58 @@ a:hover {
     padding: 0.5rem 0;
     margin: 0.125rem 0 0;
     font-size: 1rem;
-    color: rgb(205,205,205);
+    color: rgb(205, 205, 205);
     text-align: left;
     list-style: none;
-    background-color: rgb(32,33,36);
+    background-color: rgb(32, 33, 36);
     background-clip: padding-box;
-    border: 1px solid rgba(0,0,0,.15);
+    border: 1px solid rgba(0, 0, 0, .15);
     border-radius: 0.25rem;
 }
-.dropdown-item:focus, .dropdown-item:hover {
+
+.dropdown-item:focus,
+.dropdown-item:hover {
     color: #ffffff;
     text-decoration: none;
     background-color: #beebff;
 }
+
 .dropdown-item {
     display: block;
     width: 100%;
     padding: 0.25rem 1.5rem;
     clear: both;
     font-weight: 400;
-    color: rgb(205,205,205);
+    color: rgb(205, 205, 205);
     text-align: inherit;
     white-space: nowrap;
     background-color: transparent;
     border: 0;
 }
+
 .card-body.overflow-auto {
-    padding-right:0px;
-    padding-left:0px;
-    padding:0px;
+    padding-right: 0px;
+    padding-left: 0px;
+    padding: 0px;
     height: 600px;
-    background-color: rgb(61,64,67);
-    color: rgb(205,205,205);
+    background-color: rgb(61, 64, 67);
+    color: rgb(205, 205, 205);
 }
-.col{
+
+.col {
     position: relative;
     width: 100%;
     padding-right: 0px;
     padding-left: 0px;
 }
+
 .card-header-tabs {
     margin-right: 0rem;
     margin-bottom: 0rem;
     margin-left: 0rem;
     border-bottom: 0rem;
 }
+
 .modal-content {
     position: relative;
     display: -ms-flexbox;
@@ -132,13 +153,14 @@ a:hover {
     flex-direction: column;
     width: 100%;
     pointer-events: auto;
-    background-color: rgb(61,64,67);
-    color: rgb(205,205,205);
+    background-color: rgb(61, 64, 67);
+    color: rgb(205, 205, 205);
     background-clip: padding-box;
-    border: 1px solid rgba(0,0,0,.2);
+    border: 1px solid rgba(0, 0, 0, .2);
     border-radius: 0.3rem;
     outline: 0;
 }
+
 .close {
     float: right;
     font-size: 1.5rem;
@@ -152,8 +174,39 @@ a:hover {
 .jstree-default .jstree-wholerow-clicked {
     background: #beebff;
     background: -webkit-linear-gradient(top, #beebff 0, #a8e4ff 100%);
-    background: linear-gradient(to bottom,rgb(0,0,0) 0, rgb(0,0,0) 100%);
+    background: linear-gradient(to bottom, rgb(0, 0, 0) 0, rgb(0, 0, 0) 100%);
 }
+
 .jstree-default .jstree-wholerow-hovered {
-    background: rgb(32,33,36);
-  }
+    background: rgb(32, 33, 36);
+}
+
+
+/*定义滚动条高宽及背景
+ 高宽分别对应横竖滚动条的尺寸*/
+
+::-webkit-scrollbar {
+    width: 15px;
+    height: 15px;
+    background-color: rgb(32, 33, 36);
+}
+
+
+/*定义滚动条轨道
+  内阴影+圆角*/
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgb(100, 100, 100);
+    border-radius: 0px;
+    background-color: rgb(32, 33, 36);
+}
+
+
+/*定义滑块
+  内阴影+圆角*/
+
+::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgb(100, 100, 100);
+    border-radius: 0px;
+    background-color: rgb(100, 100, 100);
+}
