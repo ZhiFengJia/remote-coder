@@ -32,47 +32,15 @@
             integrity="sha512-GAled7oA9WlRkBaUQlUEgxm37hf43V2KEMaEiWlvBO/ueP2BLvBLKN5tIJu4VZOTwo6Z4XvrojYngoN9dJw2ug=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <style>
-        a {
-            color: rgb(205,205,205);
-        }
-        a:hover {
-            color: rgb(61,64,67);
-        }
-        .nav-pills .show>.nav-link {
-            color: #fff;
-            background-color: rgb(61,64,67);
-        }
-        .nav-link, .nav-tabs .nav-link.active {
-            color: #495057;
-            background-color: rgb(61,64,67);
-            border-color: #dee2e6 #dee2e6 #fff;
-        }
-        .nav .nav-tabs .card-header-tabs{
-            background-color: rgb(32,33,36);
-        }
-        .form-control[readonly] {
-            color: rgb(205,205,205);
-            background-color: #0a0a0a;
-        }
-        .jstree-default .jstree-wholerow-clicked {
-            background: rgb(13,41,42);
-        }
-        .dropdown-menu {
-            background-color: rgb(32,33,36);
-        }
-        dropdown-item {
-            color: rgb(205,205,205);
-        }
-    </style>
+    <link rel="stylesheet" href="/css/darkly.css" />
 
     <title>Web IDE</title>
 </head>
 
-<body class="container-fluid" style="background-color: rgb(32,33,36);">
+<body class="container-fluid">
 <div class="row">
     <div class="col">
-        <ul class="nav nav-pills">
+        <ul class="nav nav-pills" style="border: 1px solid #000000;">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
                    aria-expanded="false">File</a>
@@ -125,7 +93,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="card-body overflow-auto" style="padding-right:0px;padding-left:0px;padding:0px;height: 600px;background-color: rgb(61,64,67);color: rgb(205,205,205);">
+            <div class="card-body overflow-auto">
                 <div id="jstree"></div>
             </div>
         </div>
@@ -159,7 +127,7 @@ public class HelloWorld {
         </div>
     </div>
 </div>
-<div class="row border">
+<div class="row">
     <div class="col" style="padding-right:0px;padding-left:0px;">
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -169,10 +137,10 @@ public class HelloWorld {
                    aria-controls="nav-terminal" aria-selected="false">Terminal</a>
             </div>
         </nav>
-        <div class="tab-content" id="nav-tabContent" style="height: 200px;">
+        <div class="tab-content" id="nav-tabContent">
             <div class="tab-pane fade show active" id="nav-console" role="tabpanel"
                  aria-labelledby="nav-console-tab">
-                    <textarea id="console" class="form-control" style="height: 200px;" placeholder="控制台"
+                    <textarea id="console" class="form-control" placeholder="控制台"
                               readonly></textarea>
             </div>
             <div class="tab-pane fade" id="nav-terminal" role="tabpanel" aria-labelledby="nav-terminal-tab">
@@ -244,7 +212,7 @@ public class HelloWorld {
             lineNumbers: true,
             matchBrackets: true,
             indentUnit: 4,
-            indentWithTabs: true,ambiance,blackboard
+            indentWithTabs: true,
         });
         editor.setSize('auto', '600');
         editor.setOption("theme", 'darcula');
