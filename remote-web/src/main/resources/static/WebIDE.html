@@ -66,12 +66,9 @@
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
-                   aria-expanded="false">Help</a>
+                   aria-expanded="false">Tools</a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#aboutModal">About</a>
-                    <a class="dropdown-item" href="https://github.com/ZhiFengJia/remote-coder" target="_blank">
-                        Go to GitHub Home
-                    </a>
+                    <a class="dropdown-item" href="#" onClick="getBytecode()">Show Bytecode</a>
                 </div>
             </li>
             <li class="nav-item">
@@ -79,6 +76,16 @@
                     Run
                     <span id="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
                           style="display: none"></span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                   aria-expanded="false">Help</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#aboutModal">About</a>
+                    <a class="dropdown-item" href="https://github.com/ZhiFengJia/remote-coder" target="_blank">
+                        Go to GitHub Home
+                    </a>
+                </div>
             </li>
         </ul>
     </div>
@@ -150,8 +157,6 @@ public class HelloWorld {
     </div>
 </div>
 
-<div id="className" hidden>HelloWorld</div>
-
 <!-- Modal -->
 <div class="modal fade" id="aboutModal" tabindex="-1" aria-labelledby="aboutModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -175,6 +180,7 @@ public class HelloWorld {
 </div>
 
 <script>
+    var classFullName = "HelloWorld";
         $(function () {
             var settings = {
                 "url": "/project/tree",
@@ -244,7 +250,25 @@ public class HelloWorld {
                     className = className.replace(/\./g, "/");
                 }
                 console.log("className:" + className);
-                $('#className').text(className);
+                classFullName = className;
+            });
+        }
+
+        function getBytecode(){
+            console.log("反编译class文件:" + classFullName);
+            var form = new FormData();
+            form.append("classFullName", classFullName);
+            var settings = {
+                "url": "/project/getBytecode",
+                "method": "POST",
+                "timeout": 0,
+                "processData": false,
+                "mimeType": "multipart/form-data",
+                "contentType": false,
+                "data": form
+            };
+            $.ajax(settings).done(function (response) {
+                editor.setValue("反编译class文件:" + response);
             });
         }
 
@@ -252,7 +276,7 @@ public class HelloWorld {
             $('#execute').attr("disabled", true);
             $('#loading').show();
             var form = new FormData();
-            form.append("className", $('#className').text());
+            form.append("className", classFullName);
             form.append("sourceCode", editor.getValue());
 
             var settings = {

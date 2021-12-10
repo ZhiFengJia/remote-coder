@@ -104,9 +104,9 @@ a:hover {
 
 .dropdown-item:focus,
 .dropdown-item:hover {
-    color: #ffffff;
+    color: rgb(205, 205, 205);
     text-decoration: none;
-    background-color: #beebff;
+    background-color: rgb(79, 79, 79);
 }
 
 .dropdown-item {

@@ -21,6 +21,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/project")
 public class projectController {
 
+    @GetMapping("/tree")
+    public List<TreeDTO> tree() {
+        TreeDTO root = new TreeDTO(null);
+        TreeUtils.generateTree(new File(TreeUtils.fileDirectory),root);
+        return root.getChildren();
+    }
+
     @PostMapping("/getFile")
     public String getFile(String filePath) throws IOException {
         File file = new File(TreeUtils.fileDirectory + filePath);
@@ -31,10 +38,8 @@ public class projectController {
         }
     }
 
-    @GetMapping("/tree")
-    public List<TreeDTO> tree() {
-        TreeDTO root = new TreeDTO(null);
-        TreeUtils.generateTree(new File(TreeUtils.fileDirectory),root);
-        return root.getChildren();
+    @PostMapping("/getBytecode")
+    public String getBytecode(String classFullName) {
+        return "正在开发中:" + classFullName;
     }
 }
