@@ -1,4 +1,5 @@
-package com.jzf.algorithm
+package com.jzf.algorithm;
+
 /**
  * Test
  *
