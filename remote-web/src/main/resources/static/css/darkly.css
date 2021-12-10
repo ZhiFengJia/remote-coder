@@ -221,3 +221,8 @@ a:hover {
 ::-webkit-scrollbar-thumb:hover {
     background: rgb(79, 79, 79);
 }
+
+/*定义滚动条横条和竖条交接处*/
+::-webkit-scrollbar-corner{
+    background-color: rgb(32, 33, 36);
+}
