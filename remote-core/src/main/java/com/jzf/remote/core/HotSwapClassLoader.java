@@ -30,9 +30,7 @@ public class HotSwapClassLoader extends ClassLoader {
         byte[] modiBytes = cm.modifyUTF8Constant("java/lang/System", Constants.SYSTEM_CLASS);
         modiBytes = cm.modifyByteCode(modiBytes);
 
-        String userDir = System.getProperty("user.dir");
-        String nameSuffix = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
-        String path = userDir + "/../dynamic_compiler_files/" + name + "_" + nameSuffix + ".class";
+        String path = Constants.COMPILED_DIR + name + ".class";
         LOG.info("保存动态编译文件路径:{}", path);
         try (FileOutputStream fos = FileUtils.openOutputStream(new File(path))) {
             fos.write(modiBytes);

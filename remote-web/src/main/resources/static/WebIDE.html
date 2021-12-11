@@ -268,7 +268,7 @@ public class HelloWorld {
                 "data": form
             };
             $.ajax(settings).done(function (response) {
-                editor.setValue("反编译class文件:" + response);
+                editor.setValue(response);
             });
         }
 
