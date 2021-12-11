@@ -37,6 +37,11 @@ public class projectController {
 
     @PostMapping("/getBytecode")
     public String getBytecode(String classFullName) {
-        return DecompiledUtils.exec(classFullName);
+        String bytecode = DecompiledUtils.exec(classFullName);
+        int index = bytecode.indexOf("\r\n");
+        if (index == -1){
+            return bytecode;
+        }
+        return bytecode.substring(index + 2);
     }
 }
