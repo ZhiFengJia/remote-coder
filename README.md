@@ -18,6 +18,7 @@
 3. 代码云端编译,运行
 4. 控制台输出
 5. 支持暗黑模式
+6. 增加反编译工具
 
 ![image](https://user-images.githubusercontent.com/28912477/145547185-317a3382-6b69-4dee-bede-68f7f0124851.png)
 
