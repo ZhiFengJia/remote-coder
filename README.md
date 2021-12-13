@@ -20,7 +20,9 @@
 5. 支持暗黑模式
 6. 增加反编译工具
 
-![image](https://user-images.githubusercontent.com/28912477/145547185-317a3382-6b69-4dee-bede-68f7f0124851.png)
+![image](https://user-images.githubusercontent.com/28912477/145739133-038163cc-2d39-4951-be32-557775bd2339.png)
+![image](https://user-images.githubusercontent.com/28912477/145739169-4d3321ef-c41d-49b3-8c95-9e023acab476.png)
+
 
 
 
