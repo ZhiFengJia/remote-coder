@@ -73,6 +73,7 @@ a {
 
 a:hover {
     color: #ffffff;
+    background-color: rgb(61, 64, 67);
     text-decoration: underline;
 }
 
@@ -186,6 +187,23 @@ a:hover {
     background-color: rgb(32, 33, 36);
 }
 
+.modal-body .input-group-text {
+    color: rgb(205, 205, 205);
+    background-color: rgb(61, 64, 67);
+    border: 1px solid rgb(61, 64, 67);
+}
+
+.modal-body .form-control {
+    color: rgb(205, 205, 205);
+    background-color: rgb(50,50,50);
+    border: 1px solid rgb(50,50,50);
+}
+
+.modal-body .form-control:focus {
+    color: rgb(205, 205, 205);
+    background-color: rgb(79, 79, 79);
+    border-color: rgb(79, 79, 79);
+}
 
 /*定义滚动条高宽及背景
  高宽分别对应横竖滚动条的尺寸*/
