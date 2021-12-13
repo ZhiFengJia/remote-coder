@@ -45,6 +45,31 @@
             <version>2.11.0</version>
         </dependency>
 
+        <!-- Core Library -->
+        <dependency>
+            <groupId>org.eclipse.jgit</groupId>
+            <artifactId>org.eclipse.jgit</artifactId>
+            <version>6.0.0.202111291000-r</version>
+        </dependency>
+        <!-- Smart HTTP Servlet -->
+        <dependency>
+            <groupId>org.eclipse.jgit</groupId>
+            <artifactId>org.eclipse.jgit.http.server</artifactId>
+            <version>6.0.0.202111291000-r</version>
+        </dependency>
+        <!-- AWT UI Helpers -->
+        <dependency>
+            <groupId>org.eclipse.jgit</groupId>
+            <artifactId>org.eclipse.jgit.ui</artifactId>
+            <version>6.0.0.202111291000-r</version>
+        </dependency>
+        <!-- JUnit Test Support -->
+        <dependency>
+            <groupId>org.eclipse.jgit</groupId>
+            <artifactId>org.eclipse.jgit.junit</artifactId>
+            <version>6.0.0.202111291000-r</version>
+        </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
