@@ -1,3 +1,5 @@
+package com.jzf.algorithm;
+
 import java.lang.management.*;
 import java.util.Arrays;
 
