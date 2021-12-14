@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/codemirror.min.css"
           integrity="sha512-CCnciBUnVXwa6IQT9q8EmGcarNit9GdKI5nJnj56B1iu0LuD13Qn/GZ+IUkrZROZaBdutN718NK6mIXdUjZGqg=="
           crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -31,6 +32,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/mode/clike/clike.min.js"
             integrity="sha512-GAled7oA9WlRkBaUQlUEgxm37hf43V2KEMaEiWlvBO/ueP2BLvBLKN5tIJu4VZOTwo6Z4XvrojYngoN9dJw2ug=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type='text/javascript' src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <link rel="stylesheet" href="/css/darkly.css" />
 
@@ -100,7 +102,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-2" style="padding:0px;">
+    <div class="selector" style="padding:0px;">
         <div class="card">
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs">
@@ -114,18 +116,17 @@
             </div>
         </div>
     </div>
-    <div class="col-10" style="padding:0px;">
-        <div class="card">
-            <div class="card-header">
-                <ul class="nav nav-tabs card-header-tabs">
-                    <li class="nav-item">
-                        <a id="fileName" class="nav-link active" href="#">HelloWorld.java</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="card-body" style="padding:0px;">
-                <div class="editor_control">
-                        <textarea class="form-control" id="code" name="code">
+    <div class="card">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs">
+                <li class="nav-item">
+                    <a id="fileName" class="nav-link active" href="#">HelloWorld.java</a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body" style="padding:0px;">
+            <div class="editor_control">
+                    <textarea class="form-control" id="code" name="code">
 /**
  * 简单示例
  *
@@ -138,7 +139,6 @@ public class HelloWorld {
     }
 }
                     </textarea>
-                </div>
             </div>
         </div>
     </div>

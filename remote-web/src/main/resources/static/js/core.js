@@ -1,4 +1,5 @@
 var classFullName = "HelloWorld";
+var editor;
 $(function () {
     var settings = {
         "url": "/project/tree",
@@ -19,7 +20,7 @@ $(function () {
             }
         });
     });
-
+    // 文件树选择事件
     $('#jstree').on("changed.jstree", function (e, data) {
         console.log(data);
 
@@ -29,17 +30,46 @@ $(function () {
             $("#fileName").text(fileName);
         }
     });
-});
 
-var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-    mode: "text/x-java",
-    lineNumbers: true,
-    matchBrackets: true,
-    indentUnit: 4,
-    indentWithTabs: true,
-});
-editor.setSize('auto', '600');
-editor.setOption("theme", 'darcula');
+    // 编辑器
+    editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+        mode: "text/x-java",
+        lineNumbers: true,
+        matchBrackets: true,
+        indentUnit: 4,
+        indentWithTabs: true,
+    });
+    editor.setOption("theme", 'darcula');
+
+    $(".selector").resizable({
+        // minWidth: 360,
+        // maxWidth: 900,
+        // minHeight:600,
+        // maxHeight: 700,
+        resize: function (event, ui) {
+            var ele = ui.element;
+            var width = $(this).parent().width() - ui.element.outerWidth();
+            var height = ui.element.outerHeight();
+
+            ele.siblings().eq(0).css('height', height + 'px');
+            ele.siblings().eq(0).css('width',width+'px');
+            editor.setSize(width, height - 41);
+
+
+        }
+    });
+
+    //初始化大小
+    var width = 300;
+    var height = 640;
+    $(".selector").css('width',width+'px');
+    $(".selector").css('height', height + 'px');
+    $(".selector").siblings().eq(0).css('height', height + 'px');
+    $(".selector").siblings().eq(0).css('width',$(".selector").parent().width() - width+'px');
+    editor.setSize($(".selector").parent().width() - width, height - 41);
+    $(".form-control[readonly]").css('height', 13.4 + 'rem');
+})
+
 
 function getFileByPath(filePath) {
     console.log("当前选择的节点:" + filePath);
@@ -72,7 +102,7 @@ function getFileByPath(filePath) {
     });
 }
 
-function getBytecode(){
+function getBytecode() {
     console.log("反编译class文件:" + classFullName);
     var form = new FormData();
     form.append("classFullName", classFullName);

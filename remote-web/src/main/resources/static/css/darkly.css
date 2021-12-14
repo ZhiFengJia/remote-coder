@@ -10,6 +10,7 @@
     background-clip: border-box;
     border: 0px;
     border-radius: 0.25rem;
+    height: 100%;
 }
 
 .card-header {
@@ -62,7 +63,6 @@ body {
     background-color: #2b2b2b;
     color: rgb(205, 205, 205);
     opacity: 1;
-    height: 13.4rem;
 }
 
 a {
@@ -127,14 +127,12 @@ a:hover {
     padding-right: 0px;
     padding-left: 0px;
     padding: 0px;
-    height: 600px;
     background-color: rgb(60, 63, 65);
     color: rgb(205, 205, 205);
 }
 
 .col {
     position: relative;
-    width: 100%;
     padding-right: 0px;
     padding-left: 0px;
 }
