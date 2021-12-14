@@ -41,34 +41,56 @@ $(function () {
     });
     editor.setOption("theme", 'darcula');
 
-    $(".selector").resizable({
+    $(".selectorLeft").resizable({
         // minWidth: 360,
         // maxWidth: 900,
         // minHeight:600,
         // maxHeight: 700,
         resize: function (event, ui) {
             var ele = ui.element;
-            var width = $(this).parent().width() - ui.element.outerWidth();
-            var height = ui.element.outerHeight();
+            var width = $(this).parent().width() - ui.element.width();
+            var height = ui.element.height();
 
             ele.siblings().eq(0).css('height', height + 'px');
-            ele.siblings().eq(0).css('width',width+'px');
+            ele.siblings().eq(0).css('width', width + 'px');
             editor.setSize(width, height - 41);
 
+            var totalHeight = $(window).height();
+            $(".form-control[readonly]").css('height', totalHeight - 40 - height - 40 + 'px');
+        }
+    });
 
+    $(".selectorRight").resizable({
+        handles: "s",
+        resize: function (event, ui) {
+            var ele = ui.element;
+            var width = $(this).parent().width() - $(".selectorLeft").width();
+            var height = ui.element.height();
+
+            $(this).css('width', width + 'px');
+            ele.siblings().eq(0).css('height', height + 'px');
+            ele.siblings().eq(0).css('width', $(".selectorLeft").width() + 'px');
+            editor.setSize(ui.element.width(), height - 41);
+
+            var totalHeight = $(window).height();
+            $(".form-control[readonly]").css('height', totalHeight - 40 - height - 40 + 'px');
         }
     });
 
     //初始化大小
-    var width = 300;
-    var height = 640;
-    $(".selector").css('width',width+'px');
-    $(".selector").css('height', height + 'px');
-    $(".selector").siblings().eq(0).css('height', height + 'px');
-    $(".selector").siblings().eq(0).css('width',$(".selector").parent().width() - width+'px');
-    editor.setSize($(".selector").parent().width() - width, height - 41);
-    $(".form-control[readonly]").css('height', 13.4 + 'rem');
+    initSize($(window).width() * 0.12, $(window).height() * 0.68);
 })
+
+function initSize(width, height) {
+    $(".selectorLeft").css('width', width + 'px');
+    $(".selectorLeft").css('height', height + 'px');
+    $(".selectorRight").css('height', height + 'px');
+    $(".selectorRight").css('width', $(".selectorLeft").parent().width() - width + 'px');
+    editor.setSize($(".selectorLeft").parent().width() - width, height - 41);
+
+    var totalHeight = $(window).height();
+    $(".form-control[readonly]").css('height', totalHeight - 40 - height - 40 + 'px');
+}
 
 
 function getFileByPath(filePath) {
