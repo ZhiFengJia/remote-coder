@@ -42,9 +42,23 @@ $(function () {
     editor.setOption("theme", 'darcula');
 
     $(".selectorLeft").resizable({
+        start: function (event, ui) {
+            // $(".form-control[readonly]").css('height', 0 + 'px');
+            // editor.setSize(10, 10);
+        },
         resize: function (event, ui) {
-            $(".form-control[readonly]").css('height', 0 + 'px');
+            var ele = ui.element;
+            var width = $(this).parent().width() - ui.element.width();
+            var height = ui.element.height();
 
+            ele.siblings().eq(0).css('height', height + 'px');
+            ele.siblings().eq(0).css('width', width + 'px');
+            editor.setSize(width, height - 41);
+
+            var totalHeight = $(window).height();
+            $(".form-control[readonly]").css('height', totalHeight - 40 - height - 40 + 'px');
+        },
+        stop: function (event, ui) {
             var ele = ui.element;
             var width = $(this).parent().width() - ui.element.width();
             var height = ui.element.height();
@@ -60,9 +74,11 @@ $(function () {
 
     $(".selectorRight").resizable({
         handles: "s",
+        start: function (event, ui) {
+            // $(".form-control[readonly]").css('height', 0 + 'px');
+            // editor.setSize(10, 10);
+        },
         resize: function (event, ui) {
-            $(".form-control[readonly]").css('height', 0 + 'px');
-
             var ele = ui.element;
             var width = $(this).parent().width() - $(".selectorLeft").width();
             var height = ui.element.height();
@@ -70,7 +86,20 @@ $(function () {
             $(this).css('width', width + 'px');
             ele.siblings().eq(0).css('height', height + 'px');
             ele.siblings().eq(0).css('width', $(".selectorLeft").width() + 'px');
-            editor.setSize(ui.element.width(), height - 41);
+            editor.setSize(width, height - 41);
+
+            var totalHeight = $(window).height();
+            $(".form-control[readonly]").css('height', totalHeight - 40 - height - 40 + 'px');
+        },
+        stop: function (event, ui) {
+            var ele = ui.element;
+            var width = $(this).parent().width() - $(".selectorLeft").width();
+            var height = ui.element.height();
+
+            $(this).css('width', width + 'px');
+            ele.siblings().eq(0).css('height', height + 'px');
+            ele.siblings().eq(0).css('width', $(".selectorLeft").width() + 'px');
+            editor.setSize(width, height - 41);
 
             var totalHeight = $(window).height();
             $(".form-control[readonly]").css('height', totalHeight - 40 - height - 40 + 'px');
@@ -82,7 +111,7 @@ $(function () {
     window.addEventListener("resize", () => {
         //窗口改变
         initSize();
-    })
+    });
 })
 
 function initSize() {
@@ -95,6 +124,13 @@ function initSize() {
     $(".selectorLeft").css('height', height + 'px');
     $(".selectorRight").css('width', $(".selectorLeft").parent().width() - width + 'px');
     $(".selectorRight").css('height', height + 'px');
+    $(".selectorLeft").resizable("option", "minWidth", totalWidth * 0.045);
+    $(".selectorLeft").resizable("option", "maxWidth", totalWidth * 0.9);
+    $(".selectorLeft").resizable("option", "minHeight", totalHeight * 0.045);
+    $(".selectorLeft").resizable("option", "maxHeight", totalHeight * 0.90);
+    $(".selectorRight").resizable("option", "minHeight", totalHeight * 0.045);
+    $(".selectorRight").resizable("option", "maxHeight", totalHeight * 0.90);
+
     editor.setSize($(".selectorLeft").parent().width() - width, height - 41);
 
     $(".form-control[readonly]").css('height', totalHeight - 40 - height - 40 + 'px');
