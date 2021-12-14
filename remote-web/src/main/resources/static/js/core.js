@@ -42,11 +42,9 @@ $(function () {
     editor.setOption("theme", 'darcula');
 
     $(".selectorLeft").resizable({
-        // minWidth: 360,
-        // maxWidth: 900,
-        // minHeight:600,
-        // maxHeight: 700,
         resize: function (event, ui) {
+            $(".form-control[readonly]").css('height', 0 + 'px');
+
             var ele = ui.element;
             var width = $(this).parent().width() - ui.element.width();
             var height = ui.element.height();
@@ -63,6 +61,8 @@ $(function () {
     $(".selectorRight").resizable({
         handles: "s",
         resize: function (event, ui) {
+            $(".form-control[readonly]").css('height', 0 + 'px');
+
             var ele = ui.element;
             var width = $(this).parent().width() - $(".selectorLeft").width();
             var height = ui.element.height();
@@ -78,17 +78,25 @@ $(function () {
     });
 
     //初始化大小
-    initSize($(window).width() * 0.12, $(window).height() * 0.68);
+    initSize();
+    window.addEventListener("resize", () => {
+        //窗口改变
+        initSize();
+    })
 })
 
-function initSize(width, height) {
+function initSize() {
+    var totalWidth = $(window).width();
+    var totalHeight = $(window).height();
+    var width = totalWidth * 0.12;
+    var height = $(window).height() * 0.68;
+
     $(".selectorLeft").css('width', width + 'px');
     $(".selectorLeft").css('height', height + 'px');
-    $(".selectorRight").css('height', height + 'px');
     $(".selectorRight").css('width', $(".selectorLeft").parent().width() - width + 'px');
+    $(".selectorRight").css('height', height + 'px');
     editor.setSize($(".selectorLeft").parent().width() - width, height - 41);
 
-    var totalHeight = $(window).height();
     $(".form-control[readonly]").css('height', totalHeight - 40 - height - 40 + 'px');
 }
 
