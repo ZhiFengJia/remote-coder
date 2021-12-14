@@ -42,10 +42,7 @@ $(function () {
     editor.setOption("theme", 'darcula');
 
     $(".selectorLeft").resizable({
-        start: function (event, ui) {
-            // $(".form-control[readonly]").css('height', 0 + 'px');
-            // editor.setSize(10, 10);
-        },
+        handles: "e,s",
         resize: function (event, ui) {
             var ele = ui.element;
             var width = $(this).parent().width() - ui.element.width();
@@ -74,10 +71,6 @@ $(function () {
 
     $(".selectorRight").resizable({
         handles: "s",
-        start: function (event, ui) {
-            // $(".form-control[readonly]").css('height', 0 + 'px');
-            // editor.setSize(10, 10);
-        },
         resize: function (event, ui) {
             var ele = ui.element;
             var width = $(this).parent().width() - $(".selectorLeft").width();
