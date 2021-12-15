@@ -19,7 +19,9 @@ websocket.onclose = function() {
 //接收到消息的回调方法
 websocket.onmessage = function(event) {
     //将消息显示在网页上
-    $("#console").val(event.data);
+    var psconsole = $('#console');
+    psconsole.append(event.data + "\r\n");
+    psconsole.scrollTop(psconsole.prop('scrollHeight'));
 }
 
 //连接发生错误的回调方法
@@ -33,6 +35,16 @@ window.onbeforeunload = function() {
 }
 
 //发送消息
-function sendMessage() {
+function projectClean() {
+    websocket.send("{'projectName':'algorithm','goals':['clean']}");
+}
+
+//发送消息
+function projectBuild() {
+    websocket.send("{'projectName':'algorithm','goals':['package']}");
+}
+
+//发送消息
+function projectCleanAndBuild() {
     websocket.send("{'projectName':'algorithm','goals':['clean','package']}");
 }
