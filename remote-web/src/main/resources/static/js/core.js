@@ -201,3 +201,27 @@ $('#execute').click(function () {
         $('#loading').hide();
     });
 });
+
+function refreshProject(){
+    var settings = {
+        "url": "/project/tree",
+        "method": "GET",
+        "timeout": 0,
+        "processData": false,
+        "mimeType": "multipart/form-data",
+        "dataType": "json",
+        "contentType": false,
+        "data": null
+    };
+    $.ajax(settings).done(function (response) {
+        console.log(response);
+        $('#jstree').jstree(true).destroy();
+        $('#jstree').jstree({
+            "plugins": ["wholerow"],
+            "core": {
+                'data': response
+            }
+        });
+//        $('#jstree').jstree(true).refresh();
+    });
+}
