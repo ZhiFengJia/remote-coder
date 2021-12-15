@@ -1,7 +1,35 @@
 var classFullName = "HelloWorld";
 var editor;
 $(function () {
-    refreshProject()();
+    var settings = {
+        "url": "/project/tree",
+        "method": "GET",
+        "timeout": 0,
+        "processData": false,
+        "mimeType": "multipart/form-data",
+        "dataType": "json",
+        "contentType": false,
+        "data": null
+    };
+    $.ajax(settings).done(function (response) {
+        console.log(response);
+        $('#jstree').jstree({
+            "plugins": ["wholerow"],
+            "core": {
+                'data': response
+            }
+        });
+        // 文件树选择事件
+        $('#jstree').on("changed.jstree", function (e, data) {
+            console.log(data);
+
+            if (data.selected[0].charAt(data.selected[0].length - 1) != '/') {
+                getFileByPath(data.selected[0]);
+                var fileName = data.selected[0].substring(data.selected[0].lastIndexOf("/") + 1);
+                $("#fileName").text(fileName);
+            }
+        });
+    });
 
     // 编辑器
     editor = CodeMirror.fromTextArea(document.getElementById("code"), {
