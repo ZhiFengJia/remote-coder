@@ -196,7 +196,7 @@ $('#execute').click(function () {
         "data": form
     };
     $.ajax(settings).done(function (response) {
-        $("#console").val(response);
+        printConsole(response);
         $('#execute').attr("disabled", false);
         $('#loading').hide();
     });
@@ -233,4 +233,10 @@ function refreshProject(){
             }
         });
     });
+}
+
+function printConsole(data){
+    var consoleObj = $('#console');
+    consoleObj.append(data + "\r\n");
+    consoleObj.scrollTop(consoleObj.prop('scrollHeight'));
 }

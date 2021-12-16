@@ -19,9 +19,7 @@ websocket.onclose = function() {
 //接收到消息的回调方法
 websocket.onmessage = function(event) {
     //将消息显示在网页上
-    var psconsole = $('#console');
-    psconsole.append(event.data + "\r\n");
-    psconsole.scrollTop(psconsole.prop('scrollHeight'));
+    printConsole(event.data);
 }
 
 //连接发生错误的回调方法
