@@ -11,6 +11,7 @@ import com.jzf.remote.web.model.WebSSHData;
 import com.jzf.remote.web.service.WebSSHService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -32,12 +33,21 @@ import java.util.concurrent.Executors;
 */
 @Service
 public class WebSSHServiceImpl implements WebSSHService {
+    private Logger logger = LoggerFactory.getLogger(WebSSHServiceImpl.class);
+
     //存放ssh连接信息的map
     private static Map<String, Object> sshMap = new ConcurrentHashMap<>();
-
-    private Logger logger = LoggerFactory.getLogger(WebSSHServiceImpl.class);
     //线程池
     private ExecutorService executorService = Executors.newCachedThreadPool();
+
+    @Value("${terminal.host}")
+    private String host;
+    @Value("${terminal.port}")
+    private Integer port;
+    @Value("${terminal.username}")
+    private String username;
+    @Value("${terminal.password}")
+    private String password;
 
     /**
      * @Description: 初始化连接
@@ -70,6 +80,10 @@ public class WebSSHServiceImpl implements WebSSHService {
         WebSSHData webSSHData = null;
         try {
             webSSHData = objectMapper.readValue(buffer, WebSSHData.class);
+            webSSHData.setHost(host);
+            webSSHData.setPort(port);
+            webSSHData.setUsername(username);
+            webSSHData.setPassword(password);
         } catch (IOException e) {
             logger.error("Json转换异常");
             logger.error("异常信息:{}", e.getMessage());

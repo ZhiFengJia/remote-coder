@@ -136,7 +136,7 @@ function initSize() {
 
     editor.setSize($(".selectorLeft").parent().width() - width, height - 41);
 
-    $(".form-control[readonly]").css('height', totalHeight - 40 - height - 40 + 'px');
+    $("#console").css('height', totalHeight - 40 - height - 40 + 'px');
 }
 
 

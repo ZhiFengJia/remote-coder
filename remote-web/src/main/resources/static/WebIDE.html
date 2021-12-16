@@ -16,6 +16,7 @@
           integrity="sha512-CCnciBUnVXwa6IQT9q8EmGcarNit9GdKI5nJnj56B1iu0LuD13Qn/GZ+IUkrZROZaBdutN718NK6mIXdUjZGqg=="
           crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/xterm/xterm.css" />
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -33,6 +34,7 @@
             integrity="sha512-GAled7oA9WlRkBaUQlUEgxm37hf43V2KEMaEiWlvBO/ueP2BLvBLKN5tIJu4VZOTwo6Z4XvrojYngoN9dJw2ug=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script type='text/javascript' src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="/xterm/xterm.js" charset="utf-8"></script>
 
     <link rel="stylesheet" href="/css/darkly.css" />
 
@@ -171,7 +173,7 @@ public class HelloWorld {
                 <textarea id="console" class="form-control" placeholder="控制台" readonly></textarea>
             </div>
             <div class="tab-pane fade" id="nav-terminal" role="tabpanel" aria-labelledby="nav-terminal-tab">
-                开发中...
+                <div id="terminal"></div>
             </div>
         </div>
     </div>
@@ -226,7 +228,8 @@ public class HelloWorld {
     </div>
 </div>
 <script src="/js/core.js"></script>
-<script src="/js/webSocket.js"></script>
+<script src="/js/web-console.js"></script>
+<script src="/js/web-terminal.js" charset="utf-8"></script>
 </body>
 
 </html>

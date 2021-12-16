@@ -22,7 +22,7 @@ public class WebSSHWebSocketConfig implements WebSocketConfigurer{
     public void registerWebSocketHandlers(WebSocketHandlerRegistry webSocketHandlerRegistry) {
         //socket通道
         //指定处理器和路径
-        webSocketHandlerRegistry.addHandler(webSSHWebSocketHandler, "/webssh")
+        webSocketHandlerRegistry.addHandler(webSSHWebSocketHandler, "/web/terminal")
                 .addInterceptors(new WebSocketInterceptor())
                 .setAllowedOrigins("*");
     }

@@ -20,7 +20,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @date 2021/12/15 17:34
  */
 @Slf4j
-@ServerEndpoint(value = "/test/one")
+@ServerEndpoint(value = "/web/console")
 @Component
 public class OneWebSocket {
     /**
