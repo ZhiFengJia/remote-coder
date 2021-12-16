@@ -70,10 +70,6 @@ public class WebSSHServiceImpl implements WebSSHService {
         WebSSHData webSSHData = null;
         try {
             webSSHData = objectMapper.readValue(buffer, WebSSHData.class);
-            webSSHData.setHost("47.92.137.2");
-            webSSHData.setPort(22);
-            webSSHData.setUsername("alpha");
-            webSSHData.setPassword("jzfJZF123");
         } catch (IOException e) {
             logger.error("Json转换异常");
             logger.error("异常信息:{}", e.getMessage());
