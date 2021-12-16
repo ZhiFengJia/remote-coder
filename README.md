@@ -19,16 +19,9 @@
 4. 控制台输出
 5. 支持暗黑模式
 6. 增加反编译工具
+7. 增加项目构建功能
 
 ![image](https://user-images.githubusercontent.com/28912477/146290885-930be76f-aec8-49b4-ad13-17e09c595d82.png)
 ![image](https://user-images.githubusercontent.com/28912477/146290994-35e802b6-6e51-4f41-92df-109b59f5fa11.png)
-
-
-
-
-
-
-
-
 
 ## 项目开发中，敬请期待。
