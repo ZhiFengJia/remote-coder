@@ -1,4 +1,4 @@
-package com.jzf.remote.web.socket;
+package com.jzf.remote.web.websocket;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

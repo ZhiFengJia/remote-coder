@@ -12,5 +12,11 @@ public class indexController {
 	public String index() {
 		return "/WebIDE.html";
 	}
+
+
+	@GetMapping("ssh")
+	public String webSSH() {
+		return "/WebSSH.html";
+	}
     
 }
