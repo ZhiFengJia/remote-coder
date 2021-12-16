@@ -203,6 +203,16 @@ a:hover {
     border-color: rgb(79, 79, 79);
 }
 
+.dot {
+    display: inline-block;
+    width: 0.6rem;
+    height: 0.6rem;
+    background-color: #ffffff;
+    border-radius: 50%;
+    opacity: 1;
+    margin-left: 0.3rem;
+}
+
 /*定义滚动条高宽及背景
  高宽分别对应横竖滚动条的尺寸*/
 

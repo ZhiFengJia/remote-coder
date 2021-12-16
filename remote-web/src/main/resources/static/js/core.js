@@ -38,8 +38,18 @@ $(function () {
         matchBrackets: true,
         indentUnit: 4,
         indentWithTabs: true,
+        theme: "darcula"
     });
-    editor.setOption("theme", 'darcula');
+    editor.setOption("extraKeys", {
+        "Ctrl-S": function (cm) {
+            console.log("editor save");
+            $('#dot').hide();
+        }
+    });
+    editor.on("change", function (instance, changeObj) {
+        console.log("editor content change");
+        $('#dot').show();
+    });
 
     $(".selectorLeft").resizable({
         handles: "e,s",
@@ -149,6 +159,7 @@ function getFileByPath(filePath) {
             return;
         }
         editor.setValue(response);
+        $('#dot').hide();
 
         var packageStr = editor.getLine(0);
         var className = filePath.substring(filePath.lastIndexOf("/") + 1, filePath.lastIndexOf("."));
@@ -176,6 +187,7 @@ function getBytecode() {
     };
     $.ajax(settings).done(function (response) {
         editor.setValue(response);
+        $('#dot').hide();
     });
 }
 
@@ -202,7 +214,7 @@ $('#execute').click(function () {
     });
 });
 
-function refreshProject(){
+function refreshProject() {
     var settings = {
         "url": "/project/tree",
         "method": "GET",
@@ -235,8 +247,8 @@ function refreshProject(){
     });
 }
 
-function printConsole(data){
+function printConsole(data) {
     var consoleObj = $('#console');
     consoleObj.append(data + "\r\n");
-    consoleObj.scrollTop(consoleObj.prop('scrollHeight'));
+    consoleObj.scrollTop(psconsole.prop('scrollHeight'));
 }
