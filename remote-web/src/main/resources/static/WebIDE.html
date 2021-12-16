@@ -75,18 +75,25 @@
                 </div>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-expanded="false">Run</a>
+                <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-expanded="false">Build</a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Run Project</a>
                     <a class="dropdown-item" href="#" onclick="projectClean()">Clean Project</a>
+                    <a class="dropdown-item" href="#" onclick="projectCompile()">Compile Project</a>
                     <a class="dropdown-item" href="#" onclick="projectBuild()">Build Project</a>
                     <a class="dropdown-item" href="#" onclick="projectCleanAndBuild()">Clean and Build Project</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                    Run
+                    <span id="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
+                          style="display: none"></span>
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Run Project</a>
+                    <a class="dropdown-item" href="#">Stop Project</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Compile File</a>
-                    <a id="execute" class="dropdown-item" href="#">
-                        Run File
-                        <span id="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
-                              style="display: none"></span></a>
+                    <a id="execute" class="dropdown-item" href="#">Run File</a>
                 </div>
             </li>
             <li class="nav-item dropdown">

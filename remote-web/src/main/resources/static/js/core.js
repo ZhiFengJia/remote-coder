@@ -250,5 +250,5 @@ function refreshProject() {
 function printConsole(data) {
     var consoleObj = $('#console');
     consoleObj.append(data + "\r\n");
-    consoleObj.scrollTop(psconsole.prop('scrollHeight'));
+    consoleObj.scrollTop(consoleObj.prop('scrollHeight'));
 }

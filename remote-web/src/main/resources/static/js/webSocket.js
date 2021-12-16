@@ -37,12 +37,14 @@ function projectClean() {
     websocket.send("{'projectName':'algorithm','goals':['clean']}");
 }
 
-//发送消息
+function projectCompile(){
+    websocket.send("{'projectName':'algorithm','goals':['compile']}");
+}
+
 function projectBuild() {
     websocket.send("{'projectName':'algorithm','goals':['package']}");
 }
 
-//发送消息
 function projectCleanAndBuild() {
     websocket.send("{'projectName':'algorithm','goals':['clean','package']}");
 }
