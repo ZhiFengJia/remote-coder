@@ -27,6 +27,11 @@ $(function () {
                 getFileByPath(data.selected[0]);
                 var fileName = data.selected[0].substring(data.selected[0].lastIndexOf("/") + 1);
                 $("#fileName").text(fileName);
+                if(/^.*\.class$/.test(fileName)){
+                    editor.setOption("readOnly",true);
+                }else{
+                    editor.setOption("readOnly",false);
+                }
             }
         });
     });

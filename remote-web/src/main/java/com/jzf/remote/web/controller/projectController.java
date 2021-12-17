@@ -2,6 +2,7 @@ package com.jzf.remote.web.controller;
 
 import com.jzf.remote.core.util.Constants;
 import com.jzf.remote.core.util.DecompiledUtils;
+import com.jzf.remote.core.util.HexUtils;
 import com.jzf.remote.core.util.MavenUtils;
 import com.jzf.remote.web.model.dto.TreeDTO;
 import com.jzf.remote.web.util.TreeUtils;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -34,7 +34,12 @@ public class projectController {
     public String getFile(String filePath) throws IOException {
         File file = new File(Constants.SOURCE_DIR + filePath);
         if (file.isFile()) {
-            return FileUtils.readFileToString(file, StandardCharsets.UTF_8);
+            if (filePath.endsWith(".class")) {
+                byte[] bytes = FileUtils.readFileToByteArray(file);
+                return HexUtils.bytesToBeautiful(bytes);
+            } else {
+                return FileUtils.readFileToString(file, StandardCharsets.UTF_8);
+            }
         } else {
             return "";
         }
@@ -44,14 +49,14 @@ public class projectController {
     public String getBytecode(String classFullName) {
         String bytecode = DecompiledUtils.exec(classFullName);
         int index = bytecode.indexOf("\r\n");
-        if (index == -1){
+        if (index == -1) {
             return bytecode;
         }
         return bytecode.substring(index + 2);
     }
 
     @PostMapping("/mvn")
-    public String mvn(String projectName,List<String> goals) {
+    public String mvn(String projectName, List<String> goals) {
         MavenUtils.goals(projectName, goals,
                 consumer -> {
                     try {
