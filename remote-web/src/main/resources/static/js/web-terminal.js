@@ -1,5 +1,6 @@
 var webSSH = null;
 var term = null;
+var isConnected = false;
 //判断当前浏览器是否支持WebSocket, 主要此处要更换为自己的地址
 if (window.WebSocket) {
     if (window.location.protocol == 'https:') {
@@ -71,7 +72,6 @@ function connectSSH() {
     isConnected = true;
 }
 
-var isConnected = false;
 function isSSHConnected() {
     return isConnected;
 }

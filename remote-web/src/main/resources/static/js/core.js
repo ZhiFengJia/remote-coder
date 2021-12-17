@@ -1,5 +1,6 @@
 var classFullName = "HelloWorld";
 var editor;
+var isTerminalResize = false;
 $(function () {
     var settings = {
         "url": "/project/tree",
@@ -71,7 +72,9 @@ $(function () {
             $("#console").css('height', totalHeight - 40 - height - 40 + 'px');
             $("#terminal").css('height', totalHeight - 40 - height - 40 + 'px');
 
-            terminalResize();
+            if(isTerminalResize){
+                terminalResize();
+            }
         },
         stop: function (event, ui) {
             var ele = ui.element;
@@ -106,7 +109,9 @@ $(function () {
             $("#console").css('height', totalHeight - 40 - height - 40 + 'px');
             $("#terminal").css('height', totalHeight - 40 - height - 40 + 'px');
 
-            terminalResize();
+            if(isTerminalResize){
+                terminalResize();
+            }
         },
         stop: function (event, ui) {
             var ele = ui.element;
@@ -136,10 +141,13 @@ $(function () {
 
     $("#terminal-tab").on('shown.bs.tab', function (event) {
         if($(event.target).attr("id") == "nav-terminal-tab"){
+            terminalResize();
             if(!isSSHConnected()){
                 $("#sshInfo").modal('show');
             }
-            terminalResize();
+            isTerminalResize = true;
+        }else{
+            isTerminalResize = false;
         }
     })
 })
