@@ -229,6 +229,7 @@ function getHexStrByFilePath() {
         editor.setValue(response);
         $('#dot').hide();
         editor.setOption("readOnly",true);
+        editor.setOption("mode","text");
     });
 }
 
