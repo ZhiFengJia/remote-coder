@@ -1,8 +1,2 @@
 server:
   port: 80
-
-terminal:
-  host: 47.92.137.2
-  port: 22
-  username: xxx
-  password: xxx

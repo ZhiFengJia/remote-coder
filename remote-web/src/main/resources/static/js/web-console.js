@@ -13,12 +13,12 @@ if (window.WebSocket) {
 
 //连接成功建立的回调方法
 webConsole.onopen = function(event) {
-    console.log("WebSocket connection successful");
+    console.log("Web Console connection successful");
 }
 
 //连接关闭的回调方法
 webConsole.onclose = function() {
-    console.log("WebSocket close");
+    console.log("Web Console close");
 }
 
 //接收到消息的回调方法
@@ -29,7 +29,7 @@ webConsole.onmessage = function(event) {
 
 //连接发生错误的回调方法
 webConsole.onerror = function() {
-    console.log("WebSocket error");
+    console.log("Web Console error");
 };
 
 //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。

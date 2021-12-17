@@ -40,15 +40,6 @@ public class WebSSHServiceImpl implements WebSSHService {
     //线程池
     private ExecutorService executorService = Executors.newCachedThreadPool();
 
-    @Value("${terminal.host}")
-    private String host;
-    @Value("${terminal.port}")
-    private Integer port;
-    @Value("${terminal.username}")
-    private String username;
-    @Value("${terminal.password}")
-    private String password;
-
     /**
      * @Description: 初始化连接
      * @Param: [session]
@@ -80,10 +71,6 @@ public class WebSSHServiceImpl implements WebSSHService {
         WebSSHData webSSHData = null;
         try {
             webSSHData = objectMapper.readValue(buffer, WebSSHData.class);
-            webSSHData.setHost(host);
-            webSSHData.setPort(port);
-            webSSHData.setUsername(username);
-            webSSHData.setPassword(password);
         } catch (IOException e) {
             logger.error("Json转换异常");
             logger.error("异常信息:{}", e.getMessage());
@@ -103,6 +90,11 @@ public class WebSSHServiceImpl implements WebSSHService {
                     } catch (JSchException | IOException e) {
                         logger.error("webssh连接异常");
                         logger.error("异常信息:{}", e.getMessage());
+                        try {
+                            session.sendMessage(new TextMessage("连接异常:" + e.getMessage()));
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
                         close(session);
                     }
                 }

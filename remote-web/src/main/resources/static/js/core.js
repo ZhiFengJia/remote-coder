@@ -63,7 +63,10 @@ $(function () {
             editor.setSize(width, height - 41);
 
             var totalHeight = $(window).height();
-            $(".form-control[readonly]").css('height', totalHeight - 40 - height - 40 + 'px');
+            $("#console").css('height', totalHeight - 40 - height - 40 + 'px');
+            $("#terminal").css('height', totalHeight - 40 - height - 40 + 'px');
+
+            terminalResize();
         },
         stop: function (event, ui) {
             var ele = ui.element;
@@ -75,7 +78,10 @@ $(function () {
             editor.setSize(width, height - 41);
 
             var totalHeight = $(window).height();
-            $(".form-control[readonly]").css('height', totalHeight - 40 - height - 40 + 'px');
+            $("#console").css('height', totalHeight - 40 - height - 40 + 'px');
+            $("#terminal").css('height', totalHeight - 40 - height - 40 + 'px');
+
+            terminalResize();
         }
     });
 
@@ -92,7 +98,10 @@ $(function () {
             editor.setSize(width, height - 41);
 
             var totalHeight = $(window).height();
-            $(".form-control[readonly]").css('height', totalHeight - 40 - height - 40 + 'px');
+            $("#console").css('height', totalHeight - 40 - height - 40 + 'px');
+            $("#terminal").css('height', totalHeight - 40 - height - 40 + 'px');
+
+            terminalResize();
         },
         stop: function (event, ui) {
             var ele = ui.element;
@@ -105,7 +114,10 @@ $(function () {
             editor.setSize(width, height - 41);
 
             var totalHeight = $(window).height();
-            $(".form-control[readonly]").css('height', totalHeight - 40 - height - 40 + 'px');
+            $("#console").css('height', totalHeight - 40 - height - 40 + 'px');
+            $("#terminal").css('height', totalHeight - 40 - height - 40 + 'px');
+
+            terminalResize();
         }
     });
 
@@ -114,7 +126,17 @@ $(function () {
     window.addEventListener("resize", () => {
         //窗口改变
         initSize();
+        terminalResize();
     });
+
+    $("#terminal-tab").on('shown.bs.tab', function (event) {
+        if($(event.target).attr("id") == "nav-terminal-tab"){
+            if(!isSSHConnected()){
+                $("#sshInfo").modal('show');
+            }
+            terminalResize();
+        }
+    })
 })
 
 function initSize() {
@@ -137,6 +159,7 @@ function initSize() {
     editor.setSize($(".selectorLeft").parent().width() - width, height - 41);
 
     $("#console").css('height', totalHeight - 40 - height - 40 + 'px');
+    $("#terminal").css('height', totalHeight - 40 - height - 40 + 'px');
 }
 
 

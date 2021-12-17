@@ -16,7 +16,9 @@
           integrity="sha512-CCnciBUnVXwa6IQT9q8EmGcarNit9GdKI5nJnj56B1iu0LuD13Qn/GZ+IUkrZROZaBdutN718NK6mIXdUjZGqg=="
           crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/xterm/xterm.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/xterm/2.9.2/xterm.min.css"
+          integrity="sha512-yqkIsVYKEsENpXQX0zLrKj6n50rmX5X1j0cclmCnETFoWG2PKMZjvDEp6do28gGLxIvMnihpERBGRa8Ck0Ls8g=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -34,7 +36,12 @@
             integrity="sha512-GAled7oA9WlRkBaUQlUEgxm37hf43V2KEMaEiWlvBO/ueP2BLvBLKN5tIJu4VZOTwo6Z4XvrojYngoN9dJw2ug=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script type='text/javascript' src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="/xterm/xterm.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xterm/2.9.2/xterm.min.js"
+            integrity="sha512-S1ITNcRgtLq/tVnMcX7Qcss09kJ5Lu7dZbtXw/dBDjxYJSdyucbYKOYI1nSbb9EtrjEK3h7Kxekkbg4gVLr8gg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xterm/2.9.2/addons/fit/fit.min.js"
+            integrity="sha512-PyTGariw9ceX9zejvpqCikObn0A3cwR3LoDQY1/L+NET1LZBMYi/IPIn6pvfRt02etYhRw4zJ2iU3yGyEH5+8A=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <link rel="stylesheet" href="/css/darkly.css" />
 
@@ -160,7 +167,7 @@ public class HelloWorld {
 <div class="row">
     <div class="col">
         <nav>
-            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <div class="nav nav-tabs" id="terminal-tab" role="tablist">
                 <a class="nav-link active" id="nav-console-tab" data-toggle="tab" href="#nav-console" role="tab"
                    aria-controls="nav-console" aria-selected="true">Console</a>
                 <a class="nav-link" id="nav-terminal-tab" data-toggle="tab" href="#nav-terminal" role="tab"
@@ -215,9 +222,9 @@ public class HelloWorld {
             <div class="modal-body">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon3">URL:</span>
+                        <span class="input-group-text" id="basic-addon">URL:</span>
                     </div>
-                    <input type="text" class="form-control" aria-describedby="basic-addon3">
+                    <input type="text" class="form-control" aria-describedby="basic-addon">
                 </div>
             </div>
             <div class="modal-footer">
@@ -227,9 +234,52 @@ public class HelloWorld {
         </div>
     </div>
 </div>
-<script src="/js/core.js"></script>
+
+<!-- Modal -->
+<div class="modal fade" id="sshInfo" tabindex="-1" aria-labelledby="sshInfoLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sshInfoLabel">配置ssh连接信息</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Host:</span>
+                    </div>
+                    <input type="text" class="form-control" aria-describedby="basic-addon1" placeholder="47.92.137.2" value="47.92.137.2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon2">Port:</span>
+                    </div>
+                    <input type="text" class="form-control" aria-describedby="basic-addon2" placeholder="22" value="22">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon3">UserName:</span>
+                    </div>
+                    <input type="text" class="form-control" aria-describedby="basic-addon3">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon4">Password:</span>
+                    </div>
+                    <input type="password" class="form-control" aria-describedby="basic-addon4">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="connectSSH()">Connect</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cannel</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="/js/web-console.js"></script>
 <script src="/js/web-terminal.js" charset="utf-8"></script>
+<script src="/js/core.js"></script>
 </body>
 
 </html>
