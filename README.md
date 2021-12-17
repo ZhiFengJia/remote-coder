@@ -21,11 +21,13 @@
 6. 增加反编译工具
 7. 增加项目构建功能
 8. 增加web终端（借鉴https://github.com/NoCortY/WebSSH）
+9. 增加十六进制转换工具
 
 ![image](https://user-images.githubusercontent.com/28912477/146290885-930be76f-aec8-49b4-ad13-17e09c595d82.png)
 ![image](https://user-images.githubusercontent.com/28912477/146290994-35e802b6-6e51-4f41-92df-109b59f5fa11.png)
 ![image](https://user-images.githubusercontent.com/28912477/146495024-d956b3d0-2cc6-4417-8a74-6efffd9a4151.png)
 ![image](https://user-images.githubusercontent.com/28912477/146495034-89329bd8-e333-4e20-a25c-4a81368d8a13.png)
+![image](https://user-images.githubusercontent.com/28912477/146532599-1d1154a6-9c70-4a0f-af98-e0f91dcc012a.png)
 
 
 ## 项目开发中，敬请期待。
