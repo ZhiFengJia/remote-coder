@@ -45,6 +45,17 @@ public class projectController {
         }
     }
 
+    @PostMapping("/getHexStrByFilePath")
+    public String getHexStrByFilePath(String filePath) throws IOException {
+        File file = new File(Constants.SOURCE_DIR + filePath);
+        if (file.isFile()) {
+            byte[] bytes = FileUtils.readFileToByteArray(file);
+            return HexUtils.bytesToBeautiful(bytes);
+        } else {
+            return "";
+        }
+    }
+
     @PostMapping("/getBytecode")
     public String getBytecode(String classFullName) {
         String bytecode = DecompiledUtils.exec(classFullName);

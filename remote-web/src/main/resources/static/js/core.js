@@ -1,4 +1,5 @@
 var classFullName = "HelloWorld";
+var tempFilePath = "";
 var editor;
 var isTerminalResize = false;
 $(function () {
@@ -25,13 +26,16 @@ $(function () {
             console.log(data);
 
             if (data.selected[0].charAt(data.selected[0].length - 1) != '/') {
+                tempFilePath = data.selected[0];
                 getFileByPath(data.selected[0]);
                 var fileName = data.selected[0].substring(data.selected[0].lastIndexOf("/") + 1);
                 $("#fileName").text(fileName);
                 if(/^.*\.class$/.test(fileName)){
                     editor.setOption("readOnly",true);
+                    editor.setOption("mode","text");
                 }else{
                     editor.setOption("readOnly",false);
+                    editor.setOption("mode","text/x-java");
                 }
             }
         });
@@ -208,6 +212,26 @@ function getFileByPath(filePath) {
     });
 }
 
+function getHexStrByFilePath() {
+    console.log("转换十六进制显示:" + tempFilePath);
+    var form = new FormData();
+    form.append("filePath", tempFilePath);
+    var settings = {
+        "url": "/project/getHexStrByFilePath",
+        "method": "POST",
+        "timeout": 0,
+        "processData": false,
+        "mimeType": "multipart/form-data",
+        "contentType": false,
+        "data": form
+    };
+    $.ajax(settings).done(function (response) {
+        editor.setValue(response);
+        $('#dot').hide();
+        editor.setOption("readOnly",true);
+    });
+}
+
 function getBytecode() {
     console.log("反编译class文件:" + classFullName);
     var form = new FormData();
@@ -224,6 +248,7 @@ function getBytecode() {
     $.ajax(settings).done(function (response) {
         editor.setValue(response);
         $('#dot').hide();
+        editor.setOption("readOnly",true);
     });
 }
 
