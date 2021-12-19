@@ -16,9 +16,104 @@ $(function () {
     $.ajax(settings).done(function (response) {
         console.log(response);
         $('#jstree').jstree({
-            "plugins": ["wholerow"],
+            /*core：表示jstree核心参数，主要设置两个data：也就是初始化时候jstree样子，check_callback：必须为true（否则增删改动作没有反应，这些动作都是需要回调。）*/
             "core": {
+                "check_callback" : true,
+                "multiple" : false,
                 'data': response
+            },
+            /*plugins:表示你使用那些插件,contextmenu:右键菜单,dnd:节点可以拖拽,unique:同级节点去重,wholerow:凸显被选择的节点*/
+            "plugins" : [
+                "contextmenu","dnd","unique", "wholerow"
+              ],
+            /*contextmenu:就是右键菜单插件，items就是自定义右键菜单选项，label是右键菜单选项的名称。icon就是选项前面的图标，action点击选项触发事件*/
+            "contextmenu" : {
+                /*指示在调用上下文菜单时是否应选择该节点。默认为true.*/
+                "select_node": true,
+                /*指示菜单是否应与节点对齐。默认为true，否则使用鼠标坐标。*/
+                "show_at_node": false,
+                "items" : {
+                    "New" : {
+                        "label" : "New",
+                        "action" : function(obj) {
+                            console.log(obj);
+                        },
+                        "submenu": {
+                            "NewJavaClass" : {
+                                "label" : "Java Class",
+                                "action" : function(obj) {
+                                    console.log(obj);
+                                }
+                            },
+                            "NewPackage" : {
+                                "label" : "Package",
+                                "separator_after": true,
+                                "action" : function(obj) {
+                                    console.log(obj);
+                                }
+                            },
+                            "NewFile" : {
+                                "label" : "File",
+                                "action" : function(obj) {
+                                    console.log(obj);
+                                }
+                            },
+                            "NewDirectory" : {
+                                "label" : "Directory",
+                                "action" : function(obj) {
+                                    console.log(obj);
+                                }
+                            }
+                        }
+                    },
+                    "deleteFileOrFolder" : {
+                        "label" : "delete...",
+                        "action" : function(obj) {
+                            console.log(obj);
+                        }
+                    },
+                    "create" : {
+                        "label" : "新增节点",
+                        "action" : function(obj) {
+                            var inst = jQuery.jstree.reference(obj.reference);
+                            var clickedNode = inst.get_node(obj.reference);
+                            var newNode = inst.create_node(obj.reference,clickedNode.val);
+                            var ty = inst.get_type(obj.reference);
+                            inst.set_type(newNode, ty);
+                            var Nodeobj = inst.get_json(newNode);
+                            var str = {
+                                "id" : Nodeobj.id,
+                                "text" : Nodeobj.text,
+                                "icon" : Nodeobj.icon,
+                                "type" : Nodeobj.type,
+                                "parentid" : clickedNode.id,
+                                "tablelist" : null
+                            };
+                            var selectedTab = $('#t_map').tabs('getSelected');
+                            var pageTitle = selectedTab.panel('options').title;
+                            $.post("lwy/createNode.do", {changedata : JSON.stringify(str),pageTitle:pageTitle},
+                                    function(data) {});
+                            inst.edit(newNode);
+                            inst.open_node(obj.reference);
+                        },
+                    },
+                    "rename" : {
+                        "label" : "重命名",
+                        "action" : function(obj) {
+                            var inst = jQuery.jstree.reference(obj.reference);
+                            var clickedNode = inst.get_node(obj.reference);
+                            inst.edit(obj.reference,clickedNode.val);
+                        }
+                    },
+                    "delete" : {
+                        "label" : "删除节点",
+                        "action" : function(obj) {
+                            var inst = jQuery.jstree.reference(obj.reference);
+                            var clickedNode = inst.get_node(obj.reference);
+                            inst.delete_node(obj.reference);
+                        }
+                    }
+                }
             }
         });
         // 文件树选择事件
