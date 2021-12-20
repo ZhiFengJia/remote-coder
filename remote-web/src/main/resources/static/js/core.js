@@ -29,29 +29,26 @@ $(function () {
                         console.log(obj);
                     },
                     "submenu": {
-                        "NewJavaClass": {
-                            "label": "Java Class",
-                            "action": function (obj) {
-                                console.log(obj);
-                            }
-                        },
-                        "NewPackage": {
-                            "label": "Package",
-                            "separator_after": true,
-                            "action": function (obj) {
-                                console.log(obj);
-                            }
-                        },
                         "NewFile": {
                             "label": "File",
                             "action": function (obj) {
                                 console.log(obj);
+                                var inst = $.jstree.reference(obj.reference);
+                                var clickedNode = inst.get_node(obj.reference);
+                                var newNode = inst.create_node(obj.reference, clickedNode.val);
+                                inst.edit(newNode);
+                                inst.open_node(obj.reference);
                             }
                         },
                         "NewDirectory": {
                             "label": "Directory",
                             "action": function (obj) {
                                 console.log(obj);
+                                var inst = $.jstree.reference(obj.reference);
+                                var clickedNode = inst.get_node(obj.reference);
+                                var newNode = inst.create_node(obj.reference, clickedNode.val);
+                                inst.edit(newNode);
+                                inst.open_node(obj.reference);
                             }
                         }
                     }
@@ -79,16 +76,6 @@ $(function () {
                         var inst = $.jstree.reference(obj.reference);
                         inst.refresh();
                     }
-                },
-                "create": {
-                    "label": "新增节点",
-                    "action": function (obj) {
-                        var inst = $.jstree.reference(obj.reference);
-                        var clickedNode = inst.get_node(obj.reference);
-                        var newNode = inst.create_node(obj.reference, clickedNode.val);
-                        inst.edit(newNode);
-                        inst.open_node(obj.reference);
-                    },
                 }
             }
         }
@@ -252,7 +239,7 @@ function initSize() {
 
     $(".selectorLeft").css('width', width + 'px');
     $(".selectorLeft").css('height', height + 'px');
-    $(".selectorRight").css('width', $(".selectorLeft").parent().width() - width + 'px');
+    $(".selectorRight").css('width', $(".selectorLeft").parent().width() - width - 15 + 'px');
     $(".selectorRight").css('height', height + 'px');
     $(".selectorLeft").resizable("option", "minWidth", totalWidth * 0.045);
     $(".selectorLeft").resizable("option", "maxWidth", totalWidth * 0.9);
