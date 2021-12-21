@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class DecompiledUtils {
     private static final Logger LOG = LoggerFactory.getLogger(DecompiledUtils.class);
 
-    public static String exec(String classFullName) {
+    public static String exec(String filePath) {
         List<String> cmds = new ArrayList<>();
         cmds.add("javap");
         cmds.add("-c");//对代码进行反汇编
@@ -28,9 +28,7 @@ public class DecompiledUtils {
         cmds.add("-l");//输出行号和本地变量表
         cmds.add("-s");//输出内部类型签名
         cmds.add("-sysinfo");//显示正在处理的类的系统信息 (路径, 大小, 日期, MD5 散列)
-        cmds.add("-classpath");//指定查找用户类文件的位置
-        cmds.add(Constants.COMPILED_DIR);
-        cmds.add(classFullName);
+        cmds.add(Constants.SOURCE_DIR + filePath);
         LOG.info("Command: {}", String.join(" ", cmds));
 
         ProcessBuilder processBuilder = new ProcessBuilder(cmds);

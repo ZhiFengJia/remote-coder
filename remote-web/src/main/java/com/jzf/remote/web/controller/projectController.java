@@ -56,8 +56,8 @@ public class projectController {
     }
 
     @PostMapping("/getBytecode")
-    public String getBytecode(String classFullName) {
-        String bytecode = DecompiledUtils.exec(classFullName);
+    public String getBytecode(String filePath) {
+        String bytecode = DecompiledUtils.exec(filePath);
         int index = bytecode.indexOf("\r\n");
         if (index == -1) {
             return bytecode;

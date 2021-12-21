@@ -1,5 +1,5 @@
-var classFullName;
-var tempFilePath;
+var currentClassName = null;
+var currentFilePath = null;
 var editor;
 var isTerminalResize = false;
 $(function () {
@@ -90,8 +90,8 @@ $(function () {
         console.log(e, data);
         if (data.action == "select_node") {
             if (data.selected[0].charAt(data.selected[0].length - 1) != '/') {
-                tempFilePath = data.selected[0];
-                getFileByPath(data.selected[0]);
+                currentFilePath = data.selected[0];
+                getFileByPath();
                 var fileName = data.selected[0].substring(data.selected[0].lastIndexOf("/") + 1);
                 $("#fileName").text(fileName);
                 if (/^.*\.java/.test(fileName)) {
@@ -137,6 +137,8 @@ $(function () {
                     editor.setOption("readOnly", false);
                     editor.setOption("mode", "text/plain");
                 }
+            }else{
+                currentFilePath = null;
             }
         }
     });
@@ -317,10 +319,10 @@ function initSize() {
 }
 
 
-function getFileByPath(filePath) {
-    console.log("当前选择的节点:" + filePath);
+function getFileByPath() {
+    console.log("currentFilePath:" + currentFilePath);
     var form = new FormData();
-    form.append("filePath", filePath);
+    form.append("filePath", currentFilePath);
     var settings = {
         "url": "/project/getFile",
         "method": "POST",
@@ -338,62 +340,71 @@ function getFileByPath(filePath) {
         editor.setValue(response);
         $('#dot').hide();
 
-        var packageStr = editor.getLine(0);
-        var className = filePath.substring(filePath.lastIndexOf("/") + 1, filePath.lastIndexOf("."));
-        if (/^package.*$/.test(packageStr)) {
-            className = packageStr.substring(8, packageStr.indexOf(";")) + "/" + className;
-            className = className.replace(/\./g, "/");
+        if (/^.*\.java$/.test(currentFilePath)) {
+            var packageStr = editor.getLine(0);
+            var className = currentFilePath.substring(currentFilePath.lastIndexOf("/") + 1, currentFilePath.lastIndexOf("."));
+            if (/^package.*$/.test(packageStr)) {
+                className = packageStr.substring(8, packageStr.indexOf(";")) + "/" + className;
+                className = className.replace(/\./g, "/");
+            }
+            console.log("currentClassName:" + className);
+            currentClassName = className;
+        }else{
+            currentClassName = null;
         }
-        console.log("className:" + className);
-        classFullName = className;
     });
 }
 
 function getHexStrByFilePath() {
-    console.log("转换十六进制显示:" + tempFilePath);
-    var form = new FormData();
-    form.append("filePath", tempFilePath);
-    var settings = {
-        "url": "/project/getHexStrByFilePath",
-        "method": "POST",
-        "timeout": 0,
-        "processData": false,
-        "mimeType": "multipart/form-data",
-        "contentType": false,
-        "data": form
-    };
-    $.ajax(settings).done(function (response) {
-        editor.setValue(response);
-        $('#dot').hide();
-        editor.setOption("readOnly", true);
-        editor.setOption("mode", "text");
-    });
+    if(currentFilePath != null){
+        console.log("转换十六进制显示:" + currentFilePath);
+        var form = new FormData();
+        form.append("filePath", currentFilePath);
+        var settings = {
+            "url": "/project/getHexStrByFilePath",
+            "method": "POST",
+            "timeout": 0,
+            "processData": false,
+            "mimeType": "multipart/form-data",
+            "contentType": false,
+            "data": form
+        };
+        $.ajax(settings).done(function (response) {
+            editor.setValue(response);
+            $('#dot').hide();
+            editor.setOption("readOnly", true);
+            editor.setOption("mode", "text");
+        });
+    }
 }
 
 function getBytecode() {
-    console.log("反编译class文件:" + classFullName);
-    var form = new FormData();
-    form.append("classFullName", classFullName);
-    var settings = {
-        "url": "/project/getBytecode",
-        "method": "POST",
-        "timeout": 0,
-        "processData": false,
-        "mimeType": "multipart/form-data",
-        "contentType": false,
-        "data": form
-    };
-    $.ajax(settings).done(function (response) {
-        editor.setValue(response);
-        $('#dot').hide();
-        editor.setOption("readOnly", true);
-    });
+    if(currentFilePath != null){
+        console.log("反编译class文件:" + currentFilePath);
+        var form = new FormData();
+        form.append("filePath", currentFilePath);
+        var settings = {
+            "url": "/project/getBytecode",
+            "method": "POST",
+            "timeout": 0,
+            "processData": false,
+            "mimeType": "multipart/form-data",
+            "contentType": false,
+            "data": form
+        };
+        $.ajax(settings).done(function (response) {
+            editor.setValue(response);
+            $('#dot').hide();
+            editor.setOption("readOnly", true);
+            editor.setOption("mode", "text/x-java");
+        });
+    }
 }
 
 function saveFile() {
-    if (tempFilePath != null) {
-        console.log("save file", tempFilePath);
-        $.post("/file/save", { filePath: tempFilePath, content: editor.getValue() },
+    if (currentFilePath != null) {
+        console.log("save file", currentFilePath);
+        $.post("/file/save", { filePath: currentFilePath, content: editor.getValue() },
             function (data) {
                 console.log(data);
                 $('#dot').hide();
@@ -402,11 +413,11 @@ function saveFile() {
 }
 
 $('#execute').click(function () {
-    if(classFullName != null){
+    if(currentClassName != null){
         $('#execute').attr("disabled", true);
         $('#loading').show();
         var form = new FormData();
-        form.append("className", classFullName);
+        form.append("className", currentClassName);
         form.append("sourceCode", editor.getValue());
 
         var settings = {
