@@ -22,6 +22,7 @@
 7. 增加项目构建功能
 8. 增加web终端（借鉴https://github.com/NoCortY/WebSSH）
 9. 增加十六进制转换工具
+10. 支持文件树操作（右键单击文件），添加，重命名，删除，移动文件/文件夹，以及编辑器的保存操作（Ctrl+S）
 
 ![image](https://user-images.githubusercontent.com/28912477/146290885-930be76f-aec8-49b4-ad13-17e09c595d82.png)
 ![image](https://user-images.githubusercontent.com/28912477/146290994-35e802b6-6e51-4f41-92df-109b59f5fa11.png)
