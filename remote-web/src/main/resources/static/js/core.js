@@ -1,5 +1,5 @@
-var classFullName = "HelloWorld";
-var tempFilePath = "";
+var classFullName;
+var tempFilePath;
 var editor;
 var isTerminalResize = false;
 $(function () {
@@ -16,6 +16,9 @@ $(function () {
         "plugins": [
             "contextmenu", "dnd", "unique", "wholerow"
         ],
+        "dnd": {
+            "copy": false
+        },
         /*contextmenu:就是右键菜单插件，items就是自定义右键菜单选项，label是右键菜单选项的名称。icon就是选项前面的图标，action点击选项触发事件*/
         "contextmenu": {
             /*指示在调用上下文菜单时是否应选择该节点。默认为true.*/
@@ -25,30 +28,33 @@ $(function () {
             "items": {
                 "New": {
                     "label": "New",
-                    "action": function (obj) {
-                        console.log(obj);
-                    },
                     "submenu": {
                         "NewFile": {
                             "label": "File",
                             "action": function (obj) {
-                                console.log(obj);
                                 var inst = $.jstree.reference(obj.reference);
                                 var clickedNode = inst.get_node(obj.reference);
-                                var newNode = inst.create_node(obj.reference, clickedNode.val);
+                                if (!/^.*\/$/.test(clickedNode.id)) {
+                                    //如果当前选择的是文件的话,就在同级目录下创建文件.
+                                    clickedNode = inst.get_node(clickedNode.parent);
+                                }
+                                var newNode = inst.create_node(clickedNode, { text: "新建文件", icon: "jstree-file" });
                                 inst.edit(newNode);
-                                inst.open_node(obj.reference);
+                                inst.open_node(clickedNode);
                             }
                         },
                         "NewDirectory": {
                             "label": "Directory",
                             "action": function (obj) {
-                                console.log(obj);
                                 var inst = $.jstree.reference(obj.reference);
                                 var clickedNode = inst.get_node(obj.reference);
-                                var newNode = inst.create_node(obj.reference, clickedNode.val);
+                                if (!/^.*\/$/.test(clickedNode.id)) {
+                                    //如果当前选择的是文件的话,就在同级目录下创建文件夹.
+                                    clickedNode = inst.get_node(clickedNode.parent);
+                                }
+                                var newNode = inst.create_node(clickedNode, { text: "新建文件夹", icon: "jstree-folder" });
                                 inst.edit(newNode);
-                                inst.open_node(obj.reference);
+                                inst.open_node(newNode);
                             }
                         }
                     }
@@ -58,16 +64,15 @@ $(function () {
                     "action": function (obj) {
                         var inst = $.jstree.reference(obj.reference);
                         var clickedNode = inst.get_node(obj.reference);
-                        inst.edit(obj.reference, clickedNode.val);
+                        inst.edit(clickedNode);
                     }
                 },
                 "Delete": {
                     "label": "Delete...",
                     "action": function (obj) {
-                        console.log(obj);
                         var inst = $.jstree.reference(obj.reference);
                         var clickedNode = inst.get_node(obj.reference);
-                        inst.delete_node(obj.reference);
+                        inst.delete_node(clickedNode);
                     }
                 },
                 "Refresh": {
@@ -89,36 +94,93 @@ $(function () {
                 getFileByPath(data.selected[0]);
                 var fileName = data.selected[0].substring(data.selected[0].lastIndexOf("/") + 1);
                 $("#fileName").text(fileName);
-                if (/^.*\.class$/.test(fileName)) {
-                    editor.setOption("readOnly", true);
-                    editor.setOption("mode", "text");
-                } else {
+                if (/^.*\.java/.test(fileName)) {
                     editor.setOption("readOnly", false);
                     editor.setOption("mode", "text/x-java");
+                } else if (/^.*\.class$/.test(fileName)) {
+                    editor.setOption("readOnly", true);
+                    editor.setOption("mode", "text/plain");
+                } else if (/^.*\.jar/.test(fileName)) {
+                    editor.setOption("readOnly", true);
+                    editor.setOption("mode", "text/plain");
+                } else if (/^.*\.xml/.test(fileName)) {
+                    editor.setOption("readOnly", false);
+                    editor.setOption("mode", "text/x-java");
+                } else if (/^.*\.json/.test(fileName)) {
+                    editor.setOption("readOnly", false);
+                    editor.setOption("mode", "application/json");
+                } else if (/^.*\.yml/.test(fileName)) {
+                    editor.setOption("readOnly", false);
+                    editor.setOption("mode", "text/yaml");
+                } else if (/^.*\.js/.test(fileName)) {
+                    editor.setOption("readOnly", false);
+                    editor.setOption("mode", "text/javascript");
+                } else if (/^.*\.css/.test(fileName)) {
+                    editor.setOption("readOnly", false);
+                    editor.setOption("mode", "text/css");
+                } else if (/^.*\.html/.test(fileName)) {
+                    editor.setOption("readOnly", false);
+                    editor.setOption("mode", "text/html");
+                } else if (/^.*\.jsp/.test(fileName)) {
+                    editor.setOption("readOnly", false);
+                    editor.setOption("mode", "application/x-jsp");
+                } else if (/^.*\.sql/.test(fileName)) {
+                    editor.setOption("readOnly", false);
+                    editor.setOption("mode", "text/x-mysql");
+                } else if (/^.*\.md/.test(fileName)) {
+                    editor.setOption("readOnly", false);
+                    editor.setOption("mode", "text/x-markdown");
+                } else if (/^.*\.sh/.test(fileName)) {
+                    editor.setOption("readOnly", false);
+                    editor.setOption("mode", "text/x-sh");
+                } else {
+                    editor.setOption("readOnly", false);
+                    editor.setOption("mode", "text/plain");
                 }
             }
         }
     });
 
     $('#jstree').on("create_node.jstree", function (e, data) {
-        console.log(e, data);
+        console.log("创建", e, data);
+        var isDirectory = data.node.text == "新建文件夹" ? true : false;
+        $.post("/file/create", { path: data.node.parent, fileName: data.node.text, isDirectory: isDirectory },
+            function (data) {
+                console.log(data);
+            });
     });
 
     $('#jstree').on("rename_node.jstree", function (e, data) {
-        console.log(e, data);
+        console.log("重命名", e, data);
+        $.post("/file/rename", { path: data.node.parent, oldFileName: data.old, newFileName: data.text },
+            function (data) {
+                console.log(data);
+                refreshWorkspace();
+            });
     });
 
     $('#jstree').on("delete_node.jstree", function (e, data) {
-        console.log(e, data);
+        console.log("删除", e, data);
+        $.post("/file/delete", { path: data.node.parent, fileName: data.node.text },
+            function (data) {
+                console.log(data);
+                refreshWorkspace();
+            });
     });
 
     $('#jstree').on("move_node.jstree", function (e, data) {
-        console.log(e, data);
+        console.log("移动", e, data);
+        $.post("/file/move", { oldPath: data.old_parent, newPath: data.node.parent, fileName: data.node.text },
+            function (data) {
+                console.log(data);
+                refreshWorkspace();
+            });
     });
 
     // 编辑器
     editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-        mode: "text/x-java",
+        mode: "text/plain",
+        readOnly: true,
         lineNumbers: true,
         matchBrackets: true,
         indentUnit: 4,
@@ -128,7 +190,7 @@ $(function () {
     editor.setOption("extraKeys", {
         "Ctrl-S": function (cm) {
             console.log("editor save");
-            $('#dot').hide();
+            saveFile();
         }
     });
     editor.on("change", function (instance, changeObj) {
@@ -269,7 +331,7 @@ function getFileByPath(filePath) {
         "data": form
     };
     $.ajax(settings).done(function (response) {
-        if (response.valueOf() == "") {
+        if (response.valueOf() == null) {
             console.log("当前选择的节点是文件夹");
             return;
         }
@@ -328,27 +390,40 @@ function getBytecode() {
     });
 }
 
-$('#execute').click(function () {
-    $('#execute').attr("disabled", true);
-    $('#loading').show();
-    var form = new FormData();
-    form.append("className", classFullName);
-    form.append("sourceCode", editor.getValue());
+function saveFile() {
+    if (tempFilePath != null) {
+        console.log("save file", tempFilePath);
+        $.post("/file/save", { filePath: tempFilePath, content: editor.getValue() },
+            function (data) {
+                console.log(data);
+                $('#dot').hide();
+            });
+    }
+}
 
-    var settings = {
-        "url": "/remote/executeJavaSourceCode",
-        "method": "POST",
-        "timeout": 0,
-        "processData": false,
-        "mimeType": "multipart/form-data",
-        "contentType": false,
-        "data": form
-    };
-    $.ajax(settings).done(function (response) {
-        printConsole(response);
-        $('#execute').attr("disabled", false);
-        $('#loading').hide();
-    });
+$('#execute').click(function () {
+    if(classFullName != null){
+        $('#execute').attr("disabled", true);
+        $('#loading').show();
+        var form = new FormData();
+        form.append("className", classFullName);
+        form.append("sourceCode", editor.getValue());
+
+        var settings = {
+            "url": "/remote/executeJavaSourceCode",
+            "method": "POST",
+            "timeout": 0,
+            "processData": false,
+            "mimeType": "multipart/form-data",
+            "contentType": false,
+            "data": form
+        };
+        $.ajax(settings).done(function (response) {
+            printConsole(response);
+            $('#execute').attr("disabled", false);
+            $('#loading').hide();
+        });
+    }
 });
 
 function refreshWorkspace() {

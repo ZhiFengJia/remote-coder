@@ -3,7 +3,6 @@ package com.jzf.remote.web.controller;
 import com.jzf.remote.core.util.Constants;
 import com.jzf.remote.core.util.DecompiledUtils;
 import com.jzf.remote.core.util.HexUtils;
-import com.jzf.remote.core.util.MavenUtils;
 import com.jzf.remote.web.model.dto.TreeDTO;
 import com.jzf.remote.web.util.TreeUtils;
 import org.apache.commons.io.FileUtils;
@@ -41,7 +40,7 @@ public class projectController {
                 return FileUtils.readFileToString(file, StandardCharsets.UTF_8);
             }
         } else {
-            return "";
+            return null;
         }
     }
 
@@ -52,7 +51,7 @@ public class projectController {
             byte[] bytes = FileUtils.readFileToByteArray(file);
             return HexUtils.bytesToBeautiful(bytes);
         } else {
-            return "";
+            return null;
         }
     }
 
@@ -64,24 +63,5 @@ public class projectController {
             return bytecode;
         }
         return bytecode.substring(index + 2);
-    }
-
-    @PostMapping("/mvn")
-    public String mvn(String projectName, List<String> goals) {
-        MavenUtils.goals(projectName, goals,
-                consumer -> {
-                    try {
-                        do {
-                            String line = consumer.readLine();
-                            if (line == null) {
-                                break;
-                            }
-                            System.out.println(line);
-                        } while (true);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
-        return "";
     }
 }
