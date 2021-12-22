@@ -5,6 +5,9 @@
 ## 优势
 > 只需一个浏览器即可进行代码编码、运行。
 
+## 项目主页
+> https://github.com/ZhiFengJia/remote-coder
+
 ## 安装
 1. 下载"remote-web-distribution.zip"压缩包,并解压.
 2. 双击bin目录下的"startup.bat"文件以启动项目.
