@@ -64,4 +64,9 @@ public class projectController {
         }
         return bytecode.substring(index + 2);
     }
+
+    @PostMapping("/introduce")
+    public String introduce() throws IOException {
+        return FileUtils.readFileToString(new File(Constants.README_FILE), StandardCharsets.UTF_8);
+    }
 }

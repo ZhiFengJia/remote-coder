@@ -58,7 +58,7 @@
         <!-- 可以将指定文件拷贝到指定目录 -->
         <file>
             <!-- 源文件，相对路径或绝对路径 -->
-            <source>README.md</source>
+            <source>../README.md</source>
             <!-- 输出目录 -->
             <outputDirectory>/</outputDirectory>
         </file>

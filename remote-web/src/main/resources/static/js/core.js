@@ -276,18 +276,25 @@ $(function () {
         }
     })
 
+    editorContentInit();
     $("#projectIntroduce").click(function (event) {
         console.log(event);
         currentClassName = null;
         currentFilePath = null;
         currentFileName = null;
-        editor.setValue("介绍");
-        editor.setOption("readOnly", true);
-        editor.setOption("mode", "text/plain");
+        editorContentInit();
         $("#fileNameTab").find("a").removeClass("active");
         $(event.currentTarget).find("a").eq(0).addClass("active");
     });
 })
+
+function editorContentInit(){
+    $.post("/project/introduce", function (data) {
+        editor.setValue(data);
+        editor.setOption("readOnly", true);
+        editor.setOption("mode", "text/x-markdown");
+    });
+}
 
 function initSize() {
     var totalWidth = $(window).width();
