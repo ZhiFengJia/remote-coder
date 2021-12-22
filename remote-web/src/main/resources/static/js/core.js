@@ -1,5 +1,6 @@
 var currentClassName = null;
 var currentFilePath = null;
+var currentFileName = null;
 var editor;
 var isTerminalResize = false;
 $(function () {
@@ -91,54 +92,33 @@ $(function () {
         if (data.action == "select_node") {
             if (data.selected[0].charAt(data.selected[0].length - 1) != '/') {
                 currentFilePath = data.selected[0];
+                currentFileName = currentFilePath.substring(currentFilePath.lastIndexOf("/") + 1);
                 getFileByPath();
-                var fileName = data.selected[0].substring(data.selected[0].lastIndexOf("/") + 1);
-                $("#fileName").text(fileName);
-                if (/^.*\.java/.test(fileName)) {
-                    editor.setOption("readOnly", false);
-                    editor.setOption("mode", "text/x-java");
-                } else if (/^.*\.class$/.test(fileName)) {
-                    editor.setOption("readOnly", true);
-                    editor.setOption("mode", "text/plain");
-                } else if (/^.*\.jar/.test(fileName)) {
-                    editor.setOption("readOnly", true);
-                    editor.setOption("mode", "text/plain");
-                } else if (/^.*\.xml/.test(fileName)) {
-                    editor.setOption("readOnly", false);
-                    editor.setOption("mode", "text/x-java");
-                } else if (/^.*\.json/.test(fileName)) {
-                    editor.setOption("readOnly", false);
-                    editor.setOption("mode", "application/json");
-                } else if (/^.*\.yml/.test(fileName)) {
-                    editor.setOption("readOnly", false);
-                    editor.setOption("mode", "text/yaml");
-                } else if (/^.*\.js/.test(fileName)) {
-                    editor.setOption("readOnly", false);
-                    editor.setOption("mode", "text/javascript");
-                } else if (/^.*\.css/.test(fileName)) {
-                    editor.setOption("readOnly", false);
-                    editor.setOption("mode", "text/css");
-                } else if (/^.*\.html/.test(fileName)) {
-                    editor.setOption("readOnly", false);
-                    editor.setOption("mode", "text/html");
-                } else if (/^.*\.jsp/.test(fileName)) {
-                    editor.setOption("readOnly", false);
-                    editor.setOption("mode", "application/x-jsp");
-                } else if (/^.*\.sql/.test(fileName)) {
-                    editor.setOption("readOnly", false);
-                    editor.setOption("mode", "text/x-mysql");
-                } else if (/^.*\.md/.test(fileName)) {
-                    editor.setOption("readOnly", false);
-                    editor.setOption("mode", "text/x-markdown");
-                } else if (/^.*\.sh/.test(fileName)) {
-                    editor.setOption("readOnly", false);
-                    editor.setOption("mode", "text/x-sh");
+                //实现打开多个文件面板
+                $("#fileNameTab").find("a").removeClass("active");
+                var currentFileNameTabItem = $("#fileNameTab").find("#" + currentFilePath.substring(currentFilePath.lastIndexOf("/") + 1, currentFilePath.lastIndexOf(".")));
+                if (currentFileNameTabItem.length == 0) {
+                    var fileNameTabItems = $("#fileNameTab").children();
+                    var newfileNameTabItem = fileNameTabItems.eq(0).clone();
+                    newfileNameTabItem.attr("id", currentFilePath.substring(currentFilePath.lastIndexOf("/") + 1, currentFilePath.lastIndexOf(".")));
+                    newfileNameTabItem.find("span").eq(0).text(currentFileName);
+                    newfileNameTabItem.find("span").eq(1).attr("id", "dot" + currentFilePath.substring(currentFilePath.lastIndexOf("/") + 1, currentFilePath.lastIndexOf(".")));
+                    newfileNameTabItem.find("a").eq(0).addClass("active");
+                    $("#fileNameTab").append(newfileNameTabItem);
+                    newfileNameTabItem.click(currentFilePath, function (event) {
+                        console.log(event);
+                        currentFilePath = event.data;
+                        currentFileName = currentFilePath.substring(currentFilePath.lastIndexOf("/") + 1);
+                        getFileByPath();
+                        $("#fileNameTab").find("a").removeClass("active");
+                        $(event.currentTarget).find("a").eq(0).addClass("active");
+                    });
                 } else {
-                    editor.setOption("readOnly", false);
-                    editor.setOption("mode", "text/plain");
+                    currentFileNameTabItem.find("a").eq(0).addClass("active");
                 }
-            }else{
+            } else {
                 currentFilePath = null;
+                currentFileName = null;
             }
         }
     });
@@ -197,7 +177,9 @@ $(function () {
     });
     editor.on("change", function (instance, changeObj) {
         console.log("editor content change");
-        $('#dot').show();
+        if(currentFilePath != null){
+            $("#dot" + currentFilePath.substring(currentFilePath.lastIndexOf("/") + 1, currentFilePath.lastIndexOf("."))).show();
+        }
     });
 
     $(".selectorLeft").resizable({
@@ -293,6 +275,18 @@ $(function () {
             isTerminalResize = false;
         }
     })
+
+    $("#projectIntroduce").click(function (event) {
+        console.log(event);
+        currentClassName = null;
+        currentFilePath = null;
+        currentFileName = null;
+        editor.setValue("介绍");
+        editor.setOption("readOnly", true);
+        editor.setOption("mode", "text/plain");
+        $("#fileNameTab").find("a").removeClass("active");
+        $(event.currentTarget).find("a").eq(0).addClass("active");
+    });
 })
 
 function initSize() {
@@ -318,6 +312,54 @@ function initSize() {
     $("#terminal").css('height', totalHeight - 40 - height - 40 + 'px');
 }
 
+function editorTextStyle() {
+    if (currentFileName != null) {
+        if (/^.*\.java/.test(currentFileName)) {
+            editor.setOption("readOnly", false);
+            editor.setOption("mode", "text/x-java");
+        } else if (/^.*\.class$/.test(currentFileName)) {
+            editor.setOption("readOnly", true);
+            editor.setOption("mode", "text/plain");
+        } else if (/^.*\.jar/.test(currentFileName)) {
+            editor.setOption("readOnly", true);
+            editor.setOption("mode", "text/plain");
+        } else if (/^.*\.xml/.test(currentFileName)) {
+            editor.setOption("readOnly", false);
+            editor.setOption("mode", "text/x-java");
+        } else if (/^.*\.json/.test(currentFileName)) {
+            editor.setOption("readOnly", false);
+            editor.setOption("mode", "application/json");
+        } else if (/^.*\.yml/.test(currentFileName)) {
+            editor.setOption("readOnly", false);
+            editor.setOption("mode", "text/yaml");
+        } else if (/^.*\.js/.test(currentFileName)) {
+            editor.setOption("readOnly", false);
+            editor.setOption("mode", "text/javascript");
+        } else if (/^.*\.css/.test(currentFileName)) {
+            editor.setOption("readOnly", false);
+            editor.setOption("mode", "text/css");
+        } else if (/^.*\.html/.test(currentFileName)) {
+            editor.setOption("readOnly", false);
+            editor.setOption("mode", "text/html");
+        } else if (/^.*\.jsp/.test(currentFileName)) {
+            editor.setOption("readOnly", false);
+            editor.setOption("mode", "application/x-jsp");
+        } else if (/^.*\.sql/.test(currentFileName)) {
+            editor.setOption("readOnly", false);
+            editor.setOption("mode", "text/x-mysql");
+        } else if (/^.*\.md/.test(currentFileName)) {
+            editor.setOption("readOnly", false);
+            editor.setOption("mode", "text/x-markdown");
+        } else if (/^.*\.sh/.test(currentFileName)) {
+            editor.setOption("readOnly", false);
+            editor.setOption("mode", "text/x-sh");
+        } else {
+            editor.setOption("readOnly", false);
+            editor.setOption("mode", "text/plain");
+        }
+    }
+}
+
 
 function getFileByPath() {
     console.log("currentFilePath:" + currentFilePath);
@@ -338,7 +380,8 @@ function getFileByPath() {
             return;
         }
         editor.setValue(response);
-        $('#dot').hide();
+        editorTextStyle();
+        $("#dot" + currentFilePath.substring(currentFilePath.lastIndexOf("/") + 1, currentFilePath.lastIndexOf("."))).hide();
 
         if (/^.*\.java$/.test(currentFilePath)) {
             var packageStr = editor.getLine(0);
@@ -349,14 +392,14 @@ function getFileByPath() {
             }
             console.log("currentClassName:" + className);
             currentClassName = className;
-        }else{
+        } else {
             currentClassName = null;
         }
     });
 }
 
 function getHexStrByFilePath() {
-    if(currentFilePath != null){
+    if (currentFilePath != null) {
         console.log("转换十六进制显示:" + currentFilePath);
         var form = new FormData();
         form.append("filePath", currentFilePath);
@@ -371,7 +414,7 @@ function getHexStrByFilePath() {
         };
         $.ajax(settings).done(function (response) {
             editor.setValue(response);
-            $('#dot').hide();
+            $("#dot" + currentFilePath.substring(currentFilePath.lastIndexOf("/") + 1, currentFilePath.lastIndexOf("."))).hide();
             editor.setOption("readOnly", true);
             editor.setOption("mode", "text");
         });
@@ -379,7 +422,7 @@ function getHexStrByFilePath() {
 }
 
 function getBytecode() {
-    if(currentFilePath != null){
+    if (currentFilePath != null) {
         console.log("反编译class文件:" + currentFilePath);
         var form = new FormData();
         form.append("filePath", currentFilePath);
@@ -394,7 +437,7 @@ function getBytecode() {
         };
         $.ajax(settings).done(function (response) {
             editor.setValue(response);
-            $('#dot').hide();
+            $("#dot" + currentFilePath.substring(currentFilePath.lastIndexOf("/") + 1, currentFilePath.lastIndexOf("."))).hide();
             editor.setOption("readOnly", true);
             editor.setOption("mode", "text/x-java");
         });
@@ -407,13 +450,13 @@ function saveFile() {
         $.post("/file/save", { filePath: currentFilePath, content: editor.getValue() },
             function (data) {
                 console.log(data);
-                $('#dot').hide();
+                $("#dot" + currentFilePath.substring(currentFilePath.lastIndexOf("/") + 1, currentFilePath.lastIndexOf("."))).hide();
             });
     }
 }
 
 $('#execute').click(function () {
-    if(currentClassName != null){
+    if (currentClassName != null) {
         $('#execute').attr("disabled", true);
         $('#loading').show();
         var form = new FormData();
