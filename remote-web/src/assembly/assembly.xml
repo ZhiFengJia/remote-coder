@@ -1,6 +1,6 @@
-<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3"
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.1.0"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3 http://maven.apache.org/xsd/assembly-1.1.3.xsd">
+          xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.1.0 http://maven.apache.org/xsd/assembly-2.1.0.xsd">
     <!-- id 标识符，添加到生成文件名称的后缀符。如果指定id的话，目标文件则是 ${artifactId}-${id}.jar -->
     <id>distribution</id>
     <formats>
@@ -18,20 +18,28 @@
             <directory>${project.basedir}/src/main/resources</directory>
             <outputDirectory>/config</outputDirectory>
             <excludes>
-                <exclude>/sourceCodeFiles/**</exclude>
-                <exclude>/DynamicCompilerFiles/**</exclude>
+                <exclude>/dynamic_compiler_files/**</exclude>
+                <exclude>/plugins/**</exclude>
+                <exclude>/workspace/**</exclude>
             </excludes>
         </fileSet>
         <fileSet>
-            <directory>${project.basedir}/src/main/resources/sourceCodeFiles</directory>
-            <outputDirectory>/source_code_files</outputDirectory>
+            <directory>${project.basedir}/src/main/resources/dynamic_compiler_files</directory>
+            <outputDirectory>/dynamic_compiler_files</outputDirectory>
             <includes>
                 <include>/**</include>
             </includes>
         </fileSet>
         <fileSet>
-            <directory>${project.basedir}/src/main/resources/DynamicCompilerFiles</directory>
-            <outputDirectory>/dynamic_compiler_files</outputDirectory>
+            <directory>${project.basedir}/src/main/resources/plugins</directory>
+            <outputDirectory>/plugins</outputDirectory>
+            <includes>
+                <include>/**</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>${project.basedir}/src/main/resources/workspace</directory>
+            <outputDirectory>/workspace</outputDirectory>
             <includes>
                 <include>/**</include>
             </includes>
