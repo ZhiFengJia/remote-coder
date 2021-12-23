@@ -177,7 +177,7 @@ $(function () {
     });
     editor.on("change", function (instance, changeObj) {
         console.log("editor content change");
-        if(currentFilePath != null){
+        if (currentFilePath != null) {
             $("#dot" + currentFilePath.substring(currentFilePath.lastIndexOf("/") + 1, currentFilePath.lastIndexOf("."))).show();
         }
     });
@@ -189,9 +189,10 @@ $(function () {
             var width = $(this).parent().width() - ui.element.width();
             var height = ui.element.height();
 
-            ele.siblings().eq(0).css('height', height + 'px');
             ele.siblings().eq(0).css('width', width + 'px');
-            editor.setSize(width, height - 41);
+            ele.siblings().eq(0).css('height', height + 'px');
+            $(this).parent().css('height', height + 'px');
+            editor.setSize(width, height - 40);
 
             var totalHeight = $(window).height();
             $("#console").css('height', totalHeight - 40 - height - 40 + 'px');
@@ -200,21 +201,25 @@ $(function () {
             if (isTerminalResize) {
                 terminalResize();
             }
+            markdownResize();
         },
         stop: function (event, ui) {
             var ele = ui.element;
             var width = $(this).parent().width() - ui.element.width();
             var height = ui.element.height();
 
-            ele.siblings().eq(0).css('height', height + 'px');
             ele.siblings().eq(0).css('width', width + 'px');
-            editor.setSize(width, height - 41);
+            ele.siblings().eq(0).css('height', height + 'px');
+            $(this).parent().css('height', height + 'px');
+            editor.setSize(width, height - 40);
 
             var totalHeight = $(window).height();
             $("#console").css('height', totalHeight - 40 - height - 40 + 'px');
             $("#terminal").css('height', totalHeight - 40 - height - 40 + 'px');
 
             terminalResize();
+            markdownResize();
+            $("#markdownContent").html(marked.parse(editor.getValue()));
         }
     });
 
@@ -226,9 +231,10 @@ $(function () {
             var height = ui.element.height();
 
             $(this).css('width', width + 'px');
-            ele.siblings().eq(0).css('height', height + 'px');
             ele.siblings().eq(0).css('width', $(".selectorLeft").width() + 'px');
-            editor.setSize(width, height - 41);
+            ele.siblings().eq(0).css('height', height + 'px');
+            $(this).parent().css('height', height + 'px');
+            editor.setSize(width, height - 40);
 
             var totalHeight = $(window).height();
             $("#console").css('height', totalHeight - 40 - height - 40 + 'px');
@@ -237,6 +243,7 @@ $(function () {
             if (isTerminalResize) {
                 terminalResize();
             }
+            markdownResize();
         },
         stop: function (event, ui) {
             var ele = ui.element;
@@ -244,15 +251,18 @@ $(function () {
             var height = ui.element.height();
 
             $(this).css('width', width + 'px');
-            ele.siblings().eq(0).css('height', height + 'px');
             ele.siblings().eq(0).css('width', $(".selectorLeft").width() + 'px');
-            editor.setSize(width, height - 41);
+            ele.siblings().eq(0).css('height', height + 'px');
+            $(this).parent().css('height', height + 'px');
+            editor.setSize(width, height - 40);
 
             var totalHeight = $(window).height();
             $("#console").css('height', totalHeight - 40 - height - 40 + 'px');
             $("#terminal").css('height', totalHeight - 40 - height - 40 + 'px');
 
             terminalResize();
+            markdownResize();
+            $("#markdownContent").html(marked.parse(editor.getValue()));
         }
     });
 
@@ -262,6 +272,7 @@ $(function () {
         //窗口改变
         initSize();
         terminalResize();
+        markdownResize();
     });
 
     $("#terminal-tab").on('shown.bs.tab', function (event) {
@@ -288,12 +299,32 @@ $(function () {
     });
 })
 
-function editorContentInit(){
+function editorContentInit() {
     $.post("/project/introduce", function (data) {
         editor.setValue(data);
         editor.setOption("readOnly", true);
         editor.setOption("mode", "text/x-markdown");
+
+        markdownResize();
+        $("#markdownContent").html(marked.parse(editor.getValue()));
     });
+}
+
+function markdownResize() {
+    var width = $(".selectorRight").width();
+    var height = $(".selectorRight").height() - 40;
+    editor.setSize(width / 2, height);
+    $("#markdownContent").css('width', width / 2 + 'px');
+    $("#markdownContent").css('height', height + 'px');
+}
+
+function markdownInitsize() {
+    var width = $(".selectorRight").width();
+    var height = $(".selectorRight").height() - 40;
+    editor.setSize(width, height);
+    $("#markdownContent").css('width', 0 + 'px');
+    $("#markdownContent").css('height', height + 'px');
+    $("#markdownContent").html("");
 }
 
 function initSize() {
@@ -302,18 +333,23 @@ function initSize() {
     var width = totalWidth * 0.12;
     var height = $(window).height() * 0.68;
 
+    editor.setSize(totalWidth - width, height - 40);
+    editor.refresh();
+
+    $(".selectorLeft").parent().css('width', totalWidth + 'px');
+    $(".selectorLeft").parent().css('height', height + 'px');
+
     $(".selectorLeft").css('width', width + 'px');
     $(".selectorLeft").css('height', height + 'px');
-    $(".selectorRight").css('width', $(".selectorLeft").parent().width() - width - 15 + 'px');
+    $(".selectorRight").css('width', totalWidth - width + 'px');
     $(".selectorRight").css('height', height + 'px');
+
     $(".selectorLeft").resizable("option", "minWidth", totalWidth * 0.045);
     $(".selectorLeft").resizable("option", "maxWidth", totalWidth * 0.9);
     $(".selectorLeft").resizable("option", "minHeight", totalHeight * 0.045);
     $(".selectorLeft").resizable("option", "maxHeight", totalHeight * 0.90);
     $(".selectorRight").resizable("option", "minHeight", totalHeight * 0.045);
     $(".selectorRight").resizable("option", "maxHeight", totalHeight * 0.90);
-
-    editor.setSize($(".selectorLeft").parent().width() - width, height - 41);
 
     $("#console").css('height', totalHeight - 40 - height - 40 + 'px');
     $("#terminal").css('height', totalHeight - 40 - height - 40 + 'px');
@@ -324,45 +360,61 @@ function editorTextStyle() {
         if (/^.*\.java/.test(currentFileName)) {
             editor.setOption("readOnly", false);
             editor.setOption("mode", "text/x-java");
+            markdownInitsize();
         } else if (/^.*\.class$/.test(currentFileName)) {
             editor.setOption("readOnly", true);
             editor.setOption("mode", "text/plain");
+            markdownInitsize();
         } else if (/^.*\.jar/.test(currentFileName)) {
             editor.setOption("readOnly", true);
             editor.setOption("mode", "text/plain");
+            markdownInitsize();
         } else if (/^.*\.xml/.test(currentFileName)) {
             editor.setOption("readOnly", false);
             editor.setOption("mode", "text/x-java");
+            markdownInitsize();
         } else if (/^.*\.json/.test(currentFileName)) {
             editor.setOption("readOnly", false);
             editor.setOption("mode", "application/json");
+            markdownInitsize();
         } else if (/^.*\.yml/.test(currentFileName)) {
             editor.setOption("readOnly", false);
             editor.setOption("mode", "text/yaml");
+            markdownInitsize();
         } else if (/^.*\.js/.test(currentFileName)) {
             editor.setOption("readOnly", false);
             editor.setOption("mode", "text/javascript");
+            markdownInitsize();
         } else if (/^.*\.css/.test(currentFileName)) {
             editor.setOption("readOnly", false);
             editor.setOption("mode", "text/css");
+            markdownInitsize();
         } else if (/^.*\.html/.test(currentFileName)) {
             editor.setOption("readOnly", false);
             editor.setOption("mode", "text/html");
+            markdownInitsize();
         } else if (/^.*\.jsp/.test(currentFileName)) {
             editor.setOption("readOnly", false);
             editor.setOption("mode", "application/x-jsp");
+            markdownInitsize();
         } else if (/^.*\.sql/.test(currentFileName)) {
             editor.setOption("readOnly", false);
             editor.setOption("mode", "text/x-mysql");
+            markdownInitsize();
         } else if (/^.*\.md/.test(currentFileName)) {
             editor.setOption("readOnly", false);
             editor.setOption("mode", "text/x-markdown");
+
+            markdownResize();
+            $("#markdownContent").html(marked.parse(editor.getValue()));
         } else if (/^.*\.sh/.test(currentFileName)) {
             editor.setOption("readOnly", false);
             editor.setOption("mode", "text/x-sh");
+            markdownInitsize();
         } else {
             editor.setOption("readOnly", false);
             editor.setOption("mode", "text/plain");
+            markdownInitsize();
         }
     }
 }

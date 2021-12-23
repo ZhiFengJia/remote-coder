@@ -71,6 +71,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/mode/shell/shell.min.js"
             integrity="sha512-hPxGlSDYCFC8zXHIbOSD/Qo5DDCxyrfWnMvwVi1TutjhPOsf9Sgo6bu5SRDXIbuWfi22YRr+RpKwJ4XOzj7mnw=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <link rel="stylesheet" href="/css/darkly.css" />
 
@@ -178,9 +179,10 @@
                         </li>
                     </ul>
                 </div>
-                <div class="card-body" style="padding:0px;">
-                    <div class="editor_control">
-                            <textarea class="form-control" id="code" name="code"></textarea>
+                <div class="card-body">
+                    <div class="row">
+                        <textarea id="code" name="code"></textarea>
+                        <div id="markdownContent" class="overflow-auto markdownContent"></div>
                     </div>
                 </div>
             </div>
@@ -218,9 +220,9 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div id="aboutModalBody" class="modal-body">
                     项目的目标是建立一种基于云的集成开发环境 (IDE)，您只需要一个浏览器，即可编写、运行和调试代码。
-                    它包括一个代码编辑器、调试程序和终端。您无需安装文件或配置开发计算机，即可开始新的项目。
+                    它包括一个代码编辑器、控制台和终端。您无需安装文件或配置开发计算机，即可开始新的项目。
                     项目基于云，因此您可以从办公室、家中或任何地方使用已连接互联网的计算机完成项目。
                 </div>
                 <div class="modal-footer">
