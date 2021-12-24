@@ -81,7 +81,7 @@ function terminalResize(){
     var totalHeight = $(window).height();
     var height = $(".selectorRight").height();
 
-    term.resize(180, (totalHeight - 40 - height - 40) / 24);
+    term.resize(180, (totalHeight - 40 - height - 40 + 12) / 24);
     term.fit();
     console.log("Web Terminal resize:",term.cols, term.rows);
 }

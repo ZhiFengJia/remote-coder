@@ -192,11 +192,11 @@ $(function () {
             ele.siblings().eq(0).css('width', width + 'px');
             ele.siblings().eq(0).css('height', height + 'px');
             $(this).parent().css('height', height + 'px');
-            editor.setSize(width, height - 40);
+            editor.setSize(width, height - 40 + 5);
 
             var totalHeight = $(window).height();
-            $("#console").css('height', totalHeight - 40 - height - 40 + 'px');
-            $("#terminal").css('height', totalHeight - 40 - height - 40 + 'px');
+            $("#console").css('height', totalHeight - 40 - height - 40 + 12 + 'px');
+            $("#terminal").css('height', totalHeight - 40 - height - 40 + 12 + 'px');
 
             if (isTerminalResize) {
                 terminalResize();
@@ -211,11 +211,11 @@ $(function () {
             ele.siblings().eq(0).css('width', width + 'px');
             ele.siblings().eq(0).css('height', height + 'px');
             $(this).parent().css('height', height + 'px');
-            editor.setSize(width, height - 40);
+            editor.setSize(width, height - 40 + 5);
 
             var totalHeight = $(window).height();
-            $("#console").css('height', totalHeight - 40 - height - 40 + 'px');
-            $("#terminal").css('height', totalHeight - 40 - height - 40 + 'px');
+            $("#console").css('height', totalHeight - 40 - height - 40 + 12 + 'px');
+            $("#terminal").css('height', totalHeight - 40 - height - 40 + 12 + 'px');
 
             terminalResize();
             markdownResize();
@@ -234,11 +234,11 @@ $(function () {
             ele.siblings().eq(0).css('width', $(".selectorLeft").width() + 'px');
             ele.siblings().eq(0).css('height', height + 'px');
             $(this).parent().css('height', height + 'px');
-            editor.setSize(width, height - 40);
+            editor.setSize(width, height - 40 + 5);
 
             var totalHeight = $(window).height();
-            $("#console").css('height', totalHeight - 40 - height - 40 + 'px');
-            $("#terminal").css('height', totalHeight - 40 - height - 40 + 'px');
+            $("#console").css('height', totalHeight - 40 - height - 40 + 12 + 'px');
+            $("#terminal").css('height', totalHeight - 40 - height - 40 + 12 + 'px');
 
             if (isTerminalResize) {
                 terminalResize();
@@ -254,11 +254,11 @@ $(function () {
             ele.siblings().eq(0).css('width', $(".selectorLeft").width() + 'px');
             ele.siblings().eq(0).css('height', height + 'px');
             $(this).parent().css('height', height + 'px');
-            editor.setSize(width, height - 40);
+            editor.setSize(width, height - 40 + 5);
 
             var totalHeight = $(window).height();
-            $("#console").css('height', totalHeight - 40 - height - 40 + 'px');
-            $("#terminal").css('height', totalHeight - 40 - height - 40 + 'px');
+            $("#console").css('height', totalHeight - 40 - height - 40 + 12 + 'px');
+            $("#terminal").css('height', totalHeight - 40 - height - 40 + 12 + 'px');
 
             terminalResize();
             markdownResize();
@@ -312,7 +312,7 @@ function editorContentInit() {
 
 function markdownResize() {
     var width = $(".selectorRight").width();
-    var height = $(".selectorRight").height() - 40;
+    var height = $(".selectorRight").height() - 40 + 5;
     editor.setSize(width / 2, height);
     $("#markdownContent").css('width', width / 2 + 'px');
     $("#markdownContent").css('height', height + 'px');
@@ -320,7 +320,7 @@ function markdownResize() {
 
 function markdownInitsize() {
     var width = $(".selectorRight").width();
-    var height = $(".selectorRight").height() - 40;
+    var height = $(".selectorRight").height() - 40 + 5;
     editor.setSize(width, height);
     $("#markdownContent").css('width', 0 + 'px');
     $("#markdownContent").css('height', height + 'px');
@@ -333,7 +333,7 @@ function initSize() {
     var width = totalWidth * 0.12;
     var height = $(window).height() * 0.68;
 
-    editor.setSize(totalWidth - width, height - 40);
+    editor.setSize(totalWidth - width, height - 40 + 5);
     editor.refresh();
 
     $(".selectorLeft").parent().css('width', totalWidth + 'px');
@@ -351,8 +351,8 @@ function initSize() {
     $(".selectorRight").resizable("option", "minHeight", totalHeight * 0.045);
     $(".selectorRight").resizable("option", "maxHeight", totalHeight * 0.90);
 
-    $("#console").css('height', totalHeight - 40 - height - 40 + 'px');
-    $("#terminal").css('height', totalHeight - 40 - height - 40 + 'px');
+    $("#console").css('height', totalHeight - 40 - height - 40 + 12 + 'px');
+    $("#terminal").css('height', totalHeight - 40 - height - 40 + 12 + 'px');
 }
 
 function editorTextStyle() {

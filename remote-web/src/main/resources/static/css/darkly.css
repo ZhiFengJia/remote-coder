@@ -283,9 +283,34 @@ a:hover {
     box-shadow: 0 0 0 transparent;
     border-radius: 0;
 }
+
+.nav-link {
+    display: block;
+    padding: 0.3rem 0.5rem;
+    font-size: 1rem;
+}
+
 .markdownContent {
     background-color: #2b2b2b;
     padding: 1rem;
+}
+
+.ui-resizable-handle:hover {
+    background-color: rgba(0, 127, 212, 0.384);
+}
+
+.ui-resizable-handle:active {
+    background-color: rgb(0,127,212);
+}
+
+.ui-resizable-e {
+    width: 5px;
+    right: 0px;
+}
+
+.ui-resizable-s {
+    height: 5px;
+    bottom: 0px;
 }
 
 /*定义滚动条高宽及背景
