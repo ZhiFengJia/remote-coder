@@ -86,16 +86,13 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-expanded="false">File</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">New Project</a>
-                        <a class="dropdown-item" href="#">New File</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#" onclick="refreshWorkspace()">Refresh Workspace</a>
-                        <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#">Import Project From Zip</a>
                         <a class="dropdown-item" href="#">Export Project To Zip</a>
                         <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#" onclick="refreshWorkspace()">Refresh Workspace</a>
+                        <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#" onclick="saveFile()">Save File</a>
-                        <a class="dropdown-item" href="#">Save All</a>
+                        <a class="dropdown-item" href="#" onclick="saveFile()">Save All</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -114,6 +111,7 @@
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="#" onClick="getBytecode()">Show Bytecode</a>
                         <a class="dropdown-item" href="#" onClick="getHexStrByFilePath()">View in HEX</a>
+                        <a class="dropdown-item" href="#">Toggle Markdown</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
